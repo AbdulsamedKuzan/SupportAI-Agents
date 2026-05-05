@@ -35,14 +35,15 @@ spec:
     multiModal: true
   models:
     preferred:
-      - deepseek-v4-pro
-      - chatgpt-5.5
+      - claude-opus-4-7
       - claude-opus-4.7
       - gemini-2.5-pro
-    minimum: gpt-4o
+      - chatgpt-5.5
+      - deepseek-v4-pro
+    minimum: deepseek-chat
     fallback: auto
-    temperature: 0.1
-    maxOutputTokens: 48000
+    temperature: 0.15
+    maxOutputTokens: 64000
   tools:
     - $ref: tools/web-search
     - $ref: tools/file-reader
@@ -92,17 +93,25 @@ spec:
     sandboxed: true
     allowedDomains:
       - "*.siemens.com"
+      - "support.industry.siemens.com"
       - "*.rockwellautomation.com"
       - "*.omron.com"
       - "*.mitsubishielectric.com"
       - "*.schneider-electric.com"
       - "*.beckhoff.com"
+      - "infosys.beckhoff.com"
       - "*.phoenixcontact.com"
       - "*.wago.com"
       - "*.codesys.com"
       - "*.delta.com.tw"
       - "*.fatek.com"
       - "*.github.com"
+      - "oscat.de"
+      - "mrplc.com"
+      - "plcs.net"
+      - "plcfiddle.com"
+      - "realpars.com"
+      - "plcacademy.com"
     dataRetention: session
     humanApproval:
       required: true

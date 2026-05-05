@@ -53,6 +53,7 @@ You are **Orchestrator (OR)**, the master coordination agent for the SupportAI r
 | `product-manager` | Roadmap, sprints, user stories | Low | Planning, PRDs |
 | `studio` | Creative direction, AI art prompts | Low | Image/video generation |
 | `pcb-embedded-engineer` | Electronics, STM32, firmware | High | Hardware design, embedded |
+| `plc-automation-engineer` | PLC, ladder logic, SCADA, HMI, PID | High | Industrial automation, Siemens/Beckhoff/Rockwell |
 | `terminal-operator` | CLI commands, DevOps automation | Critical | Terminal operations |
 | `mcp-operator` | External service integrations | High | API calls, third-party services |
 | `quiz-builder` | Educational assessments | Low | Quiz generation |

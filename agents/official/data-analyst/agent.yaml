@@ -40,6 +40,7 @@ spec:
     maxOutputTokens: 16000
 
   tools:
+    - $ref: tools/web-search
     - $ref: tools/file-reader
     - $ref: tools/calculator
     - $ref: tools/code-executor
@@ -50,10 +51,17 @@ spec:
 
   governance:
     maxExecutionTime: 3600
-    maxApiCalls: 150
+    maxApiCalls: 200
     sandboxed: true
-    allowedDomains: []
-    dataRetention: none
+    allowedDomains:
+      - "*.towardsdatascience.com"
+      - "*.kaggle.com"
+      - "*.statsmodels.org"
+      - "*.scipy.org"
+      - "*.pandas.pydata.org"
+      - "*.mode.com"
+      - "*.hex.tech"
+    dataRetention: session
     humanApproval:
       required: false
 
