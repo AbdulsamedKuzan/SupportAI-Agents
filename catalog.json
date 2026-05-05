@@ -1,6 +1,6 @@
 {
   "schemaVersion": "supportai.catalog.v1",
-  "generatedAt": "2026-05-05T14:42:59.320Z",
+  "generatedAt": "2026-05-05T18:38:17.135Z",
   "source": "supportai-agents",
   "agentCount": 15,
   "agents": [
@@ -325,12 +325,13 @@
       "maxSteps": 160,
       "multiModal": true,
       "preferredModels": [
-        "deepseek-v4-pro",
-        "chatgpt-5.5",
+        "claude-opus-4-7",
         "claude-opus-4.7",
-        "gemini-2.5-pro"
+        "gemini-2.5-pro",
+        "chatgpt-5.5",
+        "deepseek-v4-pro"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "deepseek-chat",
       "tools": [
         "web-search",
         "file-reader",
@@ -398,13 +399,13 @@
         "user-story"
       ],
       "description": "Product Manager official SupportAI agent.",
-      "reasoning": "chain-of-thought",
-      "maxSteps": 20,
+      "reasoning": "react",
+      "maxSteps": 40,
       "multiModal": false,
       "preferredModels": [
-        "gpt-4o",
+        "claude-sonnet-4",
         "gemini-2.5-pro",
-        "claude-sonnet-4"
+        "gpt-4o"
       ],
       "minimumModel": "gpt-4o-mini",
       "tools": [
@@ -840,6 +841,7 @@
       ],
       "minimumModel": "gpt-4o-mini",
       "tools": [
+        "web-search",
         "file-reader",
         "calculator",
         "code-executor",
