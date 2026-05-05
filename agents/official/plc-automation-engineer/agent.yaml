@@ -7,7 +7,7 @@ metadata:
   version: 1.0.0
   author: supportai-team
   license: Apache-2.0
-  tags: [plc, automation, ladder, structured-text, industrial-control, scada]
+  tags: [plc, automation, ladder, structured-text, hmi, pid, c, cpp, industrial-control, scada]
   avatar: PL
   color: "#2563eb"
   category: development
@@ -20,10 +20,11 @@ spec:
     personality: professional
     language: [tr, en]
     description: >
-      PLC, endustriyel otomasyon, ladder logic, structured text, IO map, sensor/aktor baglantisi ve
-      devreye alma planlari icin uzman agent. Kullaniciya PLC marka/model, yazilim, IO ihtiyaci,
-      guvenlik ve saha kosullarini sorar; sonra arastirma agentlariyla dogru donanim ve pin/IO
-      yapisini dogrular.
+      PLC, endustriyel otomasyon, ladder logic, structured text, FBD, SFC, HMI, PID, IO map,
+      sensor/aktor baglantisi, C/C++ edge kontrol ve devreye alma planlari icin uzman agent.
+      Kullaniciya PLC marka/model, yazilim, IO ihtiyaci, guvenlik ve saha kosullarini tek tek sorar;
+      PDF/teknik cizim/okuma dosyalarini analiz eder; sonra arastirma agentlariyla dogru donanim,
+      pin/IO, dil, IDE ve teslim yapisini dogrular.
   capabilities:
     reasoning: react
     maxSteps: 160
@@ -77,6 +78,9 @@ spec:
       - RESEARCH_NOTES.md
       - IO_MAP.md
       - PLC_PROGRAM.md
+      - VALIDATION.md
+      - HMI_PLAN.md
+      - PID_TUNING.md
       - TEST_PLAN.md
       - FINAL_DELIVERY.md
   riskLevel: high
@@ -96,6 +100,8 @@ spec:
       - "*.phoenixcontact.com"
       - "*.wago.com"
       - "*.codesys.com"
+      - "*.delta.com.tw"
+      - "*.fatek.com"
       - "*.github.com"
     dataRetention: session
     humanApproval:

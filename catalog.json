@@ -1,6 +1,6 @@
 {
   "schemaVersion": "supportai.catalog.v1",
-  "generatedAt": "2026-05-05T13:34:00.841Z",
+  "generatedAt": "2026-05-05T14:42:59.320Z",
   "source": "supportai-agents",
   "agentCount": 15,
   "agents": [
@@ -313,10 +313,14 @@
         "automation",
         "ladder",
         "structured-text",
+        "hmi",
+        "pid",
+        "c",
+        "cpp",
         "industrial-control",
         "scada"
       ],
-      "description": "PLC, endustriyel otomasyon, ladder logic, structured text, IO map, sensor/aktor baglantisi ve devreye alma planlari icin uzman agent. Kullaniciya PLC marka/model, yazilim, IO ihtiyaci, guvenlik ve saha kosullarini sorar; sonra arastirma agentlariyla dogru donanim ve pin/IO yapisini dogrular.",
+      "description": "PLC, endustriyel otomasyon, ladder logic, structured text, FBD, SFC, HMI, PID, IO map, sensor/aktor baglantisi, C/C++ edge kontrol ve devreye alma planlari icin uzman agent. Kullaniciya PLC marka/model, yazilim, IO ihtiyaci, guvenlik ve saha kosullarini tek tek sorar; PDF/teknik cizim/okuma dosyalarini analiz eder; sonra arastirma agentlariyla dogru donanim, pin/IO, dil, IDE ve teslim yapisini dogrular.",
       "reasoning": "react",
       "maxSteps": 160,
       "multiModal": true,
@@ -350,6 +354,9 @@
         "RESEARCH_NOTES.md",
         "IO_MAP.md",
         "PLC_PROGRAM.md",
+        "VALIDATION.md",
+        "HMI_PLAN.md",
+        "PID_TUNING.md",
         "TEST_PLAN.md",
         "FINAL_DELIVERY.md"
       ],
