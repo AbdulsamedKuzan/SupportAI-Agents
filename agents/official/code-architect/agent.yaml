@@ -1,0 +1,117 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: code-architect
+  name: Kod Mimarı
+  nameEN: Code Architect
+  version: 2.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [code, architecture, refactoring, planning, tech-debt, review, migration]
+  avatar: KM
+  color: "#6366f1"
+  category: development
+  maturity: stable
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      Üretim kalitesinde yazılım mimarı ajanı. Kod tabanlarını analiz eder, teknik borcu tespit eder,
+      refactoring planları oluşturur, modül ayrıştırma yapar, migration stratejileri üretir ve
+      saatlerce otonom çalışarak büyük kod tabanlarında mimari iyileştirmeler gerçekleştirir.
+      ReAct döngüsüyle araç kullanır, dosya okur, kod çalıştırır ve web araması yapar.
+
+  capabilities:
+    reasoning: react
+    maxSteps: 50
+    memory:
+      type: sliding-window
+      maxTokens: 64000
+    streaming: true
+    multiModal: false
+
+  models:
+    preferred:
+      - claude-opus-4.7          # Anthropic — en güçlü reasoning
+      - deepseek-v4-pro          # DeepSeek — maliyet-etkin uzun bağlam
+      - chatgpt-5.5              # OpenAI — en güncel GPT
+    minimum: deepseek-v4-pro
+    fallback: auto
+    temperature: 0.2
+    maxOutputTokens: 32000
+
+  tools:
+    # ─── Dosya okuma: Kod tabanını analiz etmek için ───
+    - $ref: tools/file-reader
+
+    # ─── Kod çalıştırma: Linting, test, script ───
+    - $ref: tools/code-executor
+
+    # ─── Web araması: Kütüphane dokümantasyonu, best practice ───
+    - $ref: tools/web-search
+
+    # ─── Proje bağımlılık analizi ───
+    - name: dependency-analyzer
+      type: builtin
+      description: >
+        Projenin bağımlılık ağacını çıkarır (package.json, requirements.txt, go.mod, Cargo.toml vb.).
+        Versiyon çakışmalarını, kullanılmayan bağımlılıkları ve güvenlik açıklarını tespit eder.
+      permissions: [read]
+
+    # ─── AST (Abstract Syntax Tree) analizi ───
+    - name: ast-analyzer
+      type: builtin
+      description: >
+        Kaynak kodun AST'sini çıkarır. Fonksiyon imzaları, sınıf hiyerarşileri,
+        import grafı, cyclomatic complexity ve dead code tespiti yapar.
+      permissions: [read]
+
+    # ─── Git geçmişi analizi ───
+    - name: git-history
+      type: builtin
+      description: >
+        Git log, blame, diff çıktılarını analiz eder. En çok değişen dosyaları (hotspot),
+        churn rate'i ve contributor pattern'larını tespit eder.
+      permissions: [read]
+
+    # ─── Dosya yazma (onaylı) ───
+    - name: file-writer
+      type: builtin
+      description: >
+        Dosya oluşturur veya düzenler. Her yazma işlemi kullanıcı onayı gerektirir.
+        Diff formatında değişiklikleri gösterir.
+      permissions: [write]
+
+  governance:
+    maxExecutionTime: 14400      # 4 saat — büyük kod tabanları için
+    maxApiCalls: 500
+    maxTokenBudget: 2000000      # 2M token bütçesi
+    sandboxed: true
+    allowedDomains:
+      - "*.github.com"
+      - "*.npmjs.com"
+      - "*.pypi.org"
+      - "*.crates.io"
+      - "*.stackoverflow.com"
+      - "*.developer.mozilla.org"
+      - "*.docs.rs"
+      - "*.pkg.go.dev"
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions:
+        - file-write
+        - execute
+        - api-call-external
+
+  io:
+    input:
+      accepts: [text, code, file]
+      maxFileSize: 50MB
+    output:
+      formats: [markdown, code, json, artifact]
+      artifacts: true

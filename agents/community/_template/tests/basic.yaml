@@ -1,0 +1,32 @@
+# Test Scenarios Template
+# Each scenario tests a specific capability of your agent.
+# These are used for automated validation and quality scoring.
+
+name: Basic functionality tests
+agent: your-agent-name
+version: 1.0.0
+
+scenarios:
+  - name: Simple request
+    input: "Provide an example request that your agent should handle well."
+    expectedBehavior: >
+      The agent should respond with a well-structured answer
+      that demonstrates its core capability.
+    tools_used: []
+    maxSteps: 5
+
+  - name: Complex request
+    input: "A more complex, multi-step request for your agent."
+    expectedBehavior: >
+      The agent should break this down into steps and provide
+      a comprehensive response.
+    tools_used: []
+    maxSteps: 10
+
+  - name: Edge case
+    input: "A request that tests the boundaries of your agent."
+    expectedBehavior: >
+      The agent should handle this gracefully, either by
+      completing the task or clearly explaining its limitations.
+    tools_used: []
+    maxSteps: 5

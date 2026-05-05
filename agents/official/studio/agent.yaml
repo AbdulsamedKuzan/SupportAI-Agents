@@ -1,0 +1,60 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: studio
+  name: Stüdyo
+  nameEN: Studio
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [creative, image, video, prompt, generation]
+  avatar: ST
+  color: "#ec4899"
+  category: creative
+  maturity: stable
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: creative
+    language: [tr, en]
+    description: >
+      Image/video üretiminde sahne, stil, kamera, ışık ve çıktı varyasyonlarını netleştirir.
+      Prompt mühendisliği ve yaratıcı yönetmenlik konularında uzmanlaşmıştır.
+
+  capabilities:
+    reasoning: chain-of-thought
+    maxSteps: 15
+    memory:
+      type: sliding-window
+      maxTokens: 16000
+    streaming: true
+    multiModal: true
+
+  models:
+    preferred: [gpt-4o, gemini-2.5-pro, claude-sonnet-4]
+    minimum: gpt-4o-mini
+    fallback: auto
+    temperature: 0.7
+    maxOutputTokens: 8000
+
+  tools:
+    - $ref: tools/web-search
+
+  governance:
+    maxExecutionTime: 1200
+    maxApiCalls: 50
+    sandboxed: true
+    allowedDomains: ["*"]
+    dataRetention: none
+    humanApproval:
+      required: false
+
+  io:
+    input:
+      accepts: [text, image, video]
+      maxFileSize: 50MB
+    output:
+      formats: [markdown, text]
+      artifacts: true

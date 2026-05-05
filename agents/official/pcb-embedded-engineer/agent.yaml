@@ -1,0 +1,76 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: pcb-embedded-engineer
+  name: PCB Embedded Engineer
+  nameEN: PCB Embedded Engineer
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [pcb, embedded, stm32, firmware, electronics]
+  avatar: PE
+  color: "#16a34a"
+  category: development
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      PCB, gomulu yazilim, STM32CubeIDE ve firmware planlari icin teknik agent. V1'de tasarim kontrolu,
+      kod taslagi ve connector hazirligi uretir.
+  capabilities:
+    reasoning: react
+    maxSteps: 100
+    memory:
+      type: summary
+      maxTokens: 128000
+    streaming: true
+    multiModal: true
+  models:
+    preferred: [chatgpt-5.5, claude-opus-4.7, deepseek-v4-pro]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.12
+    maxOutputTokens: 32000
+  tools:
+    - $ref: tools/file-reader
+    - name: firmware-planner
+      type: builtin
+      description: Produces pin maps, peripheral plans, firmware module outlines, and validation checklists.
+      permissions: [read]
+  permissions:
+    read: full
+    write: approved
+    network: limited
+    execute: approved
+    mcp: approved
+    social: none
+    system: approved
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 180
+    heartbeatSeconds: 45
+  riskLevel: high
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 21600
+    maxApiCalls: 800
+    maxTokenBudget: 3000000
+    sandboxed: true
+    allowedDomains: ["*.st.com", "*.kicad.org", "*.github.com", "*.supportai.dev"]
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions: [hardware-design, firmware-write, terminal-command, external-tool]
+  io:
+    input:
+      accepts: [text, code, file, image]
+      maxFileSize: 100MB
+    output:
+      formats: [markdown, code, json, artifact]
+      artifacts: true

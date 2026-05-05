@@ -1,0 +1,33 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: web-search
+  name: Web Search
+  version: 1.0.0
+  description: Searches the web for information and returns structured results.
+
+spec:
+  description: >
+    Performs a web search using the user's configured search provider.
+    Returns title, snippet, URL, and date for each result.
+  parameters:
+    - name: query
+      type: string
+      required: true
+      description: Search query string
+    - name: maxResults
+      type: integer
+      required: false
+      default: 5
+      description: Maximum number of results to return (1-20)
+    - name: domain
+      type: string
+      required: false
+      description: Optional domain to prioritize in results
+  returns:
+    type: array
+    description: Array of search results with title, snippet, url, and date
+  permissions:
+    - network
+  rateLimit:
+    maxCallsPerMinute: 10

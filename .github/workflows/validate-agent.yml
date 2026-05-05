@@ -1,0 +1,63 @@
+name: Validate Agent Manifests
+
+on:
+  pull_request:
+    paths:
+      - 'agents/**'
+      - 'tools/**'
+      - 'agent-schema.json'
+  push:
+    branches: [main]
+    paths:
+      - 'agents/**'
+      - 'tools/**'
+      - 'agent-schema.json'
+
+jobs:
+  validate:
+    name: Validate Manifests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate all agent manifests
+        run: npm run validate:all
+
+      - name: Check for duplicate agent IDs
+        run: npm run check:duplicates
+
+      - name: Lint system prompts
+        run: npm run lint:prompts
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scan for prompt injection patterns
+        run: npm run security:scan
+
+      - name: Check governance boundaries
+        run: npm run security:governance

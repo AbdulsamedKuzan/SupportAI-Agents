@@ -1,0 +1,80 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: orchestrator
+  name: Orkestrator
+  nameEN: Orchestrator
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [orchestration, planning, routing, governance]
+  avatar: OR
+  color: "#111827"
+  category: general
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      SupportAI agent runtime icin ana orkestrasyon agenti. Kullanici hedefini parcalara ayirir,
+      uygun uzman agentlari secer, approval gerektiren adimlari bekletir ve ciktiyi tek bir is akisi
+      haline getirir.
+  capabilities:
+    reasoning: plan-execute
+    maxSteps: 80
+    memory:
+      type: summary
+      maxTokens: 128000
+    streaming: true
+    multiModal: true
+  models:
+    preferred: [chatgpt-5.5, claude-opus-4.7, gemini-2.5-pro]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.2
+    maxOutputTokens: 32000
+  tools:
+    - name: agent-router
+      type: builtin
+      description: Selects the best available agent for each task segment.
+      permissions: [read]
+    - name: approval-gate
+      type: builtin
+      description: Pauses risky actions until user or root approval is granted.
+      permissions: [read]
+  permissions:
+    read: full
+    write: approved
+    network: limited
+    execute: none
+    mcp: approved
+    social: none
+    system: none
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 120
+    heartbeatSeconds: 30
+  riskLevel: medium
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 21600
+    maxApiCalls: 1000
+    maxTokenBudget: 4000000
+    sandboxed: true
+    allowedDomains: ["*.github.com", "*.supportai.dev"]
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions: [agent-delegation, critical-permission]
+  io:
+    input:
+      accepts: [text, code, file, image, url]
+      maxFileSize: 50MB
+    output:
+      formats: [markdown, json, artifact]
+      artifacts: true

@@ -1,0 +1,473 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://supportai.dev/schemas/agent/v1",
+  "title": "SupportAI Agent Manifest",
+  "description": "Schema for validating SupportAI agent.yaml manifest files.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "enum": ["supportai/v1"],
+      "description": "API version of the manifest format."
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["Agent"],
+      "description": "Resource type. Must be 'Agent'."
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["id", "name", "version", "author", "license", "tags", "category"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$",
+          "description": "Unique agent identifier. Lowercase, kebab-case, 3-64 chars."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "description": "Human-readable display name."
+        },
+        "nameEN": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "English display name (optional, for non-English agents)."
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.]+)?$",
+          "description": "Semantic version (major.minor.patch)."
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1,
+          "description": "GitHub username or organization."
+        },
+        "license": {
+          "type": "string",
+          "description": "SPDX license identifier.",
+          "examples": ["Apache-2.0", "MIT", "GPL-3.0-only"]
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "minItems": 1,
+          "maxItems": 10,
+          "description": "Searchable tags for discovery."
+        },
+        "avatar": {
+          "type": "string",
+          "maxLength": 4,
+          "description": "1-4 character avatar code displayed in UI."
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Hex color for the agent card."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Path to icon file relative to agent directory."
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "development",
+            "design",
+            "research",
+            "analytics",
+            "management",
+            "creative",
+            "education",
+            "health",
+            "legal",
+            "finance",
+            "accessibility",
+            "translation",
+            "devops",
+            "security",
+            "general"
+          ],
+          "description": "Primary category for marketplace organization."
+        },
+        "maturity": {
+          "type": "string",
+          "enum": ["experimental", "beta", "stable", "community", "verified", "official"],
+          "default": "experimental",
+          "description": "Maturity level of the agent."
+        },
+        "minRuntime": {
+          "type": "string",
+          "enum": ["browser", "node", "python"],
+          "default": "browser",
+          "description": "Minimum runtime environment required."
+        },
+        "homepage": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to agent homepage or documentation."
+        },
+        "repository": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to source repository if different from this repo."
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["identity", "capabilities", "models", "governance"],
+      "additionalProperties": false,
+      "properties": {
+        "identity": {
+          "type": "object",
+          "required": ["systemPromptFile", "description"],
+          "additionalProperties": false,
+          "properties": {
+            "systemPromptFile": {
+              "type": "string",
+              "description": "Path to system prompt file relative to agent directory.",
+              "default": "system.md"
+            },
+            "personality": {
+              "type": "string",
+              "enum": ["professional", "friendly", "academic", "creative", "concise"],
+              "description": "Communication style preset."
+            },
+            "language": {
+              "type": "array",
+              "items": { "type": "string", "pattern": "^[a-z]{2}(-[A-Z]{2})?$" },
+              "minItems": 1,
+              "description": "Supported languages (ISO 639-1 codes)."
+            },
+            "description": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 500,
+              "description": "Brief description of the agent's purpose."
+            }
+          }
+        },
+        "capabilities": {
+          "type": "object",
+          "required": ["reasoning", "maxSteps"],
+          "additionalProperties": false,
+          "properties": {
+            "reasoning": {
+              "type": "string",
+              "enum": ["direct", "chain-of-thought", "react", "plan-execute"],
+              "description": "Reasoning strategy. 'react' = ReAct loop with tool use."
+            },
+            "maxSteps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "description": "Maximum reasoning/action steps before termination."
+            },
+            "memory": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["none", "sliding-window", "summary", "full"],
+                  "default": "sliding-window"
+                },
+                "maxTokens": {
+                  "type": "integer",
+                  "minimum": 1000,
+                  "maximum": 2000000,
+                  "default": 16000
+                }
+              }
+            },
+            "streaming": {
+              "type": "boolean",
+              "default": true,
+              "description": "Whether the agent supports streaming output."
+            },
+            "multiModal": {
+              "type": "boolean",
+              "default": false,
+              "description": "Whether the agent can process images/audio/video."
+            }
+          }
+        },
+        "models": {
+          "type": "object",
+          "required": ["preferred"],
+          "additionalProperties": false,
+          "properties": {
+            "preferred": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1,
+              "description": "Preferred models in priority order."
+            },
+            "minimum": {
+              "type": "string",
+              "description": "Minimum capable model for this agent."
+            },
+            "fallback": {
+              "type": "string",
+              "enum": ["auto", "none"],
+              "default": "auto",
+              "description": "'auto' = runtime picks best available model."
+            },
+            "temperature": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2,
+              "description": "Default temperature for generation."
+            },
+            "maxOutputTokens": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 128000,
+              "description": "Maximum tokens per generation."
+            }
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["$ref"],
+                "properties": {
+                  "$ref": {
+                    "type": "string",
+                    "description": "Reference to a shared tool (e.g., 'tools/web-search')."
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["name", "type"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "type": {
+                    "type": "string",
+                    "enum": ["builtin", "inline", "mcp", "external"]
+                  },
+                  "description": { "type": "string" },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "read",
+                        "write",
+                        "network",
+                        "execute",
+                        "filesystem-read",
+                        "filesystem-write",
+                        "mcp",
+                        "social",
+                        "system",
+                        "terminal"
+                      ]
+                    }
+                  },
+                  "handler": { "type": "string" },
+                  "config": { "type": "object" }
+                }
+              }
+            ]
+          },
+          "description": "Tools available to this agent."
+        },
+        "permissions": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Capability levels requested by this agent. Runtime policy may further restrict these values.",
+          "properties": {
+            "read": { "$ref": "#/definitions/permissionLevel" },
+            "write": { "$ref": "#/definitions/permissionLevel" },
+            "network": { "$ref": "#/definitions/permissionLevel" },
+            "execute": { "$ref": "#/definitions/permissionLevel" },
+            "mcp": { "$ref": "#/definitions/permissionLevel" },
+            "social": { "$ref": "#/definitions/permissionLevel" },
+            "system": { "$ref": "#/definitions/permissionLevel" }
+          }
+        },
+        "mcp": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "MCP connector requirements for this agent.",
+          "properties": {
+            "servers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "name"],
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$"
+                  },
+                  "name": { "type": "string", "minLength": 2 },
+                  "requiredScopes": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "approvalPolicy": {
+                    "type": "string",
+                    "enum": ["none", "user", "root", "user-and-root"],
+                    "default": "user"
+                  }
+                }
+              }
+            },
+            "approvalPolicy": {
+              "type": "string",
+              "enum": ["none", "user", "root", "user-and-root"],
+              "default": "user"
+            }
+          }
+        },
+        "lifecycle": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Long-running execution behavior.",
+          "properties": {
+            "longRunning": { "type": "boolean", "default": false },
+            "resumable": { "type": "boolean", "default": true },
+            "budgetPolicy": {
+              "type": "string",
+              "enum": ["time-bound", "quota-bound", "approval-bound"],
+              "default": "quota-bound",
+              "description": "Primary stopping condition for logical agent runs."
+            },
+            "checkpointIntervalSeconds": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 86400,
+              "default": 300
+            },
+            "heartbeatSeconds": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 3600,
+              "default": 60
+            },
+            "communicationFiles": {
+              "type": "array",
+              "description": "Markdown files the agent reads/writes during multi-agent runs.",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9_./-]+\\.md$"
+              }
+            }
+          }
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "default": "low",
+          "description": "Highest expected operational risk for this agent."
+        },
+        "rootApprovalRequired": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether this manifest requires root governance approval before sensitive capabilities are enabled."
+        },
+        "governance": {
+          "type": "object",
+          "required": ["maxExecutionTime", "sandboxed"],
+          "additionalProperties": false,
+          "properties": {
+            "maxExecutionTime": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 86400,
+              "description": "Maximum execution time in seconds."
+            },
+            "maxApiCalls": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "description": "Maximum LLM API calls per task."
+            },
+            "maxTokenBudget": {
+              "type": "integer",
+              "description": "Maximum total tokens (input + output) per task."
+            },
+            "sandboxed": {
+              "type": "boolean",
+              "description": "Whether the agent runs in a sandboxed environment."
+            },
+            "allowedDomains": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Allowed domains for network access. ['*'] = all."
+            },
+            "dataRetention": {
+              "type": "string",
+              "enum": ["none", "session", "persistent"],
+              "default": "none",
+              "description": "How long to retain user data."
+            },
+            "humanApproval": {
+              "type": "object",
+              "properties": {
+                "required": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "forActions": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "Actions that require human approval."
+                }
+              }
+            }
+          }
+        },
+        "io": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "object",
+              "properties": {
+                "accepts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["text", "code", "file", "image", "audio", "video", "url"]
+                  }
+                },
+                "maxFileSize": { "type": "string" }
+              }
+            },
+            "output": {
+              "type": "object",
+              "properties": {
+                "formats": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["text", "markdown", "code", "json", "html", "csv", "artifact", "image"]
+                  }
+                },
+                "artifacts": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "permissionLevel": {
+      "type": "string",
+      "enum": ["none", "read", "limited", "approved", "full"]
+    }
+  }
+}

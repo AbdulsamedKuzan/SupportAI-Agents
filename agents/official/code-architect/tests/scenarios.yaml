@@ -1,0 +1,134 @@
+# Code Architect Test Scenarios
+
+name: Code Architect v2.0 — Functional Tests
+agent: code-architect
+version: 2.0.0
+
+scenarios:
+  # ─── TEMEL ANALİZ ───
+  - name: Project structure analysis
+    input: "Bu projenin yapısını analiz et ve mimari haritasını çıkar."
+    expectedBehavior: >
+      Agent MUST use file-reader tool to read directory structure first.
+      Then read key files (package.json, main entry points, config files).
+      Output should follow Format A (Architecture Analysis) with:
+      - Project topology (directory tree)
+      - Module map table
+      - Dependency graph
+      - At least basic metrics
+    tools_used: [file-reader, dependency-analyzer]
+    maxSteps: 15
+
+  # ─── REFACTORING PLANI ───
+  - name: Refactoring plan for complex module
+    input: "Auth modülü çok karmaşık olmuş. Refactor planı çıkar."
+    expectedBehavior: >
+      Agent MUST:
+      1. Find auth-related files by reading directory structure
+      2. Read auth source files
+      3. Read auth test files (if any)
+      4. Analyze complexity with ast-analyzer
+      5. Check git hotspots for auth files
+      6. Produce Format B (Refactoring Plan) with phases, risks, rollbacks
+    tools_used: [file-reader, ast-analyzer, git-history]
+    maxSteps: 20
+
+  # ─── KOD REVIEW ───
+  - name: Code review
+    input: |
+      Bu kodu review et:
+      ```javascript
+      async function processOrder(req, res) {
+        const user = await db.findUser(req.body.userId);
+        const items = req.body.items;
+        let total = 0;
+        for (let i = 0; i < items.length; i++) {
+          const product = await db.findProduct(items[i].id);
+          if (product.stock < items[i].quantity) {
+            return res.status(400).json({ error: 'Stok yetersiz: ' + product.name });
+          }
+          total += product.price * items[i].quantity;
+          await db.updateStock(items[i].id, product.stock - items[i].quantity);
+        }
+        const order = await db.createOrder({ userId: user.id, items, total });
+        await sendEmail(user.email, 'Sipariş onayı', `Sipariş #${order.id}`);
+        res.json({ orderId: order.id, total });
+      }
+      ```
+    expectedBehavior: >
+      Agent should identify:
+      - N+1 query problem (await in loop)
+      - No transaction (partial stock update on failure)
+      - No input validation
+      - No error handling for sendEmail
+      - Missing null check on user
+      - Should suggest: batch queries, transaction wrapping, input schema validation
+      Output should follow Format C (Code Review)
+    tools_used: []
+    maxSteps: 5
+
+  # ─── TEKNİK BORÇ TESPİTİ ───
+  - name: Technical debt inventory
+    input: "Bu projedeki teknik borçları tespit et ve önceliklendir."
+    expectedBehavior: >
+      Agent MUST use multiple tools:
+      1. Read project structure
+      2. Analyze complexity of key files with ast-analyzer
+      3. Check git hotspots (high churn = high debt risk)
+      4. Check dependencies for outdated/vulnerable packages
+      Output should include a prioritized debt inventory table with
+      severity, effort estimates, and recommended action order.
+    tools_used: [file-reader, ast-analyzer, git-history, dependency-analyzer]
+    maxSteps: 25
+
+  # ─── MIGRATION KILAVUZU ───
+  - name: Framework migration guide
+    input: "Projeyi React Class Components'tan Hooks'a migrate etmem lazım. Plan çıkar."
+    expectedBehavior: >
+      Agent MUST:
+      1. Search for class components in the codebase
+      2. Identify lifecycle methods usage (componentDidMount, etc.)
+      3. Map state management patterns
+      4. Produce Format D (Migration Guide) with:
+        - Compatibility matrix
+        - Step-by-step migration per component
+        - Common pitfalls (this binding, ref forwarding, etc.)
+    tools_used: [file-reader, ast-analyzer, web-search]
+    maxSteps: 20
+
+  # ─── UZUN SÜRELİ ÇALIŞMA ───
+  - name: Long-running full codebase audit
+    input: "Bu 50 dosyalık projenin tamamını analiz et. Mimari rapor çıkar."
+    expectedBehavior: >
+      Agent should demonstrate checkpoint behavior:
+      1. Read high-level structure first
+      2. Identify key modules and entry points
+      3. Deep-dive into each module progressively
+      4. Produce intermediate findings after each module
+      5. Final comprehensive report combining all findings
+      Should NOT try to read all 50 files at once — prioritize by importance.
+    tools_used: [file-reader, ast-analyzer, git-history, dependency-analyzer]
+    maxSteps: 50
+
+  # ─── EDGE CASE: BOŞ PROJE ───
+  - name: Empty or minimal project
+    input: "Bu projeyi analiz et."
+    context: "Project has only a package.json and an empty src/ folder"
+    expectedBehavior: >
+      Agent should gracefully handle minimal projects:
+      - Note that the project is in early stages
+      - Suggest initial architecture based on package.json dependencies
+      - Recommend folder structure and patterns
+      Should NOT produce a "technical debt" report for an empty project.
+    tools_used: [file-reader]
+    maxSteps: 5
+
+  # ─── TÜRKÇE YANIT TESTİ ───
+  - name: Turkish language response
+    input: "Bu fonksiyonu parçalara ayır ve her parçanın sorumluluğunu açıkla."
+    expectedBehavior: >
+      Agent MUST respond in Turkish since the input is in Turkish.
+      All section headers, descriptions, and explanations should be in Turkish.
+      Technical terms (function names, variable names) should stay in English.
+    tools_used: []
+    maxSteps: 5

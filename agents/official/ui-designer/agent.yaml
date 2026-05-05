@@ -1,0 +1,65 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: ui-designer
+  name: UI Tasarımcı
+  nameEN: UI Designer
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [ui, design, responsive, css, frontend]
+  avatar: UI
+  color: "#0ea5e9"
+  category: design
+  maturity: stable
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: creative
+    language: [tr, en]
+    description: >
+      Premium, responsive ve erişilebilir arayüz tasarımı yapar.
+      Modern web standartlarına uygun, üretim kalitesinde UI/UX çıktısı üretir.
+
+  capabilities:
+    reasoning: chain-of-thought
+    maxSteps: 20
+    memory:
+      type: sliding-window
+      maxTokens: 24000
+    streaming: true
+    multiModal: true
+
+  models:
+    preferred: [gpt-4o, claude-sonnet-4, gemini-2.5-pro]
+    minimum: gpt-4o-mini
+    fallback: auto
+    temperature: 0.5
+    maxOutputTokens: 16000
+
+  tools:
+    - $ref: tools/web-search
+    - $ref: tools/file-reader
+    - name: color-palette
+      type: builtin
+      description: Generates harmonious color palettes
+      permissions: []
+
+  governance:
+    maxExecutionTime: 1800
+    maxApiCalls: 80
+    sandboxed: true
+    allowedDomains: ["*"]
+    dataRetention: session
+    humanApproval:
+      required: false
+
+  io:
+    input:
+      accepts: [text, code, image, file]
+      maxFileSize: 10MB
+    output:
+      formats: [markdown, code, html]
+      artifacts: true

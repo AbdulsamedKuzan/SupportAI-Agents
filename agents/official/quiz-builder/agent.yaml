@@ -1,0 +1,74 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: quiz-builder
+  name: Quiz Builder
+  nameEN: Quiz Builder
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [quiz, education, assessment, exams]
+  avatar: QB
+  color: "#f59e0b"
+  category: education
+  maturity: official
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      Dokuman, konu veya ders hedefinden olculenebilir quiz, sinav, cevap anahtari ve aciklama seti uretir.
+  capabilities:
+    reasoning: plan-execute
+    maxSteps: 30
+    memory:
+      type: sliding-window
+      maxTokens: 64000
+    streaming: true
+    multiModal: true
+  models:
+    preferred: [chatgpt-5.5, gemini-2.5-pro, claude-sonnet-4]
+    minimum: gpt-4o-mini
+    fallback: auto
+    temperature: 0.35
+    maxOutputTokens: 24000
+  tools:
+    - $ref: tools/file-reader
+    - name: rubric-builder
+      type: builtin
+      description: Builds grading rubrics and answer explanations.
+      permissions: [read]
+  permissions:
+    read: full
+    write: none
+    network: limited
+    execute: none
+    mcp: none
+    social: none
+    system: none
+  lifecycle:
+    longRunning: false
+    resumable: true
+    checkpointIntervalSeconds: 120
+    heartbeatSeconds: 30
+  riskLevel: low
+  rootApprovalRequired: false
+  governance:
+    maxExecutionTime: 3600
+    maxApiCalls: 120
+    maxTokenBudget: 800000
+    sandboxed: true
+    allowedDomains: ["*"]
+    dataRetention: session
+    humanApproval:
+      required: false
+  io:
+    input:
+      accepts: [text, file, image]
+      maxFileSize: 25MB
+    output:
+      formats: [markdown, json, csv, artifact]
+      artifacts: true

@@ -1,0 +1,44 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: api-connector
+  name: API Connector
+  version: 1.0.0
+  description: Makes HTTP requests to external APIs (requires explicit domain allowlist).
+
+spec:
+  description: >
+    Sends HTTP requests to user-approved external APIs.
+    Supports GET, POST, PUT, DELETE with JSON/form payloads.
+    Only works when the agent's governance.allowedDomains includes the target domain.
+  parameters:
+    - name: url
+      type: string
+      required: true
+      description: Full URL to request
+    - name: method
+      type: string
+      required: false
+      enum: [GET, POST, PUT, DELETE, PATCH]
+      default: GET
+    - name: headers
+      type: object
+      required: false
+      description: Request headers
+    - name: body
+      type: object
+      required: false
+      description: Request body (for POST/PUT/PATCH)
+    - name: timeout
+      type: integer
+      required: false
+      default: 15
+      description: Request timeout in seconds
+  returns:
+    type: object
+    description: "{ status, headers, body, timing }"
+  permissions:
+    - network
+  security:
+    requiresDomainAllowlist: true
+    maxResponseSizeMB: 5

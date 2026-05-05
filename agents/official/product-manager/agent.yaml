@@ -1,0 +1,58 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: product-manager
+  name: Ürün Yöneticisi
+  nameEN: Product Manager
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [product, roadmap, planning, sprint, user-story]
+  avatar: PM
+  color: "#8b5cf6"
+  category: management
+  maturity: stable
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      Platform özelliklerini net fazlara, kabul kriterlerine ve ölçülebilir kalite hedeflerine bağlar.
+      Roadmap planlaması, sprint yönetimi ve kullanıcı hikayesi yazımında uzmanlaşmıştır.
+
+  capabilities:
+    reasoning: chain-of-thought
+    maxSteps: 20
+    memory:
+      type: sliding-window
+      maxTokens: 24000
+    streaming: true
+
+  models:
+    preferred: [gpt-4o, gemini-2.5-pro, claude-sonnet-4]
+    minimum: gpt-4o-mini
+    fallback: auto
+    temperature: 0.4
+
+  tools:
+    - $ref: tools/web-search
+
+  governance:
+    maxExecutionTime: 1800
+    maxApiCalls: 60
+    sandboxed: true
+    allowedDomains: ["*"]
+    dataRetention: session
+    humanApproval:
+      required: false
+
+  io:
+    input:
+      accepts: [text, file]
+      maxFileSize: 10MB
+    output:
+      formats: [markdown, json]
+      artifacts: true

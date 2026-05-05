@@ -1,0 +1,86 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: mcp-operator
+  name: MCP Operator
+  nameEN: MCP Operator
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [mcp, connectors, automation, integrations]
+  avatar: MC
+  color: "#7c3aed"
+  category: devops
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      MCP server ve connector islemlerini planlar, yetki kapsamlarini denetler, kullanici verisi uzerinde
+      approval tabanli entegrasyon calistirir.
+  capabilities:
+    reasoning: react
+    maxSteps: 100
+    memory:
+      type: summary
+      maxTokens: 128000
+    streaming: true
+    multiModal: false
+  models:
+    preferred: [chatgpt-5.5, claude-opus-4.7, deepseek-v4-pro]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.15
+    maxOutputTokens: 32000
+  tools:
+    - name: mcp-dispatcher
+      type: mcp
+      description: Calls approved MCP servers through the SupportAI runtime.
+      permissions: [mcp, network]
+  permissions:
+    read: full
+    write: approved
+    network: approved
+    execute: none
+    mcp: approved
+    social: approved
+    system: none
+  mcp:
+    approvalPolicy: user
+    servers:
+      - id: github
+        name: GitHub
+        requiredScopes: [repo:read, pull-request:write]
+        approvalPolicy: user
+      - id: google-drive
+        name: Google Drive
+        requiredScopes: [drive:read]
+        approvalPolicy: user
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 120
+    heartbeatSeconds: 30
+  riskLevel: high
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 21600
+    maxApiCalls: 1000
+    maxTokenBudget: 4000000
+    sandboxed: true
+    allowedDomains: ["*.github.com", "*.googleapis.com", "*.supportai.dev"]
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions: [mcp-call, external-write, permission-change]
+  io:
+    input:
+      accepts: [text, code, file, url]
+      maxFileSize: 50MB
+    output:
+      formats: [markdown, json, artifact]
+      artifacts: true

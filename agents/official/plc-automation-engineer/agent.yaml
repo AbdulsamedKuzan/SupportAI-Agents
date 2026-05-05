@@ -1,0 +1,115 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: plc-automation-engineer
+  name: PLC Automation Engineer
+  nameEN: PLC Automation Engineer
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [plc, automation, ladder, structured-text, industrial-control, scada]
+  avatar: PL
+  color: "#2563eb"
+  category: development
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      PLC, endustriyel otomasyon, ladder logic, structured text, IO map, sensor/aktor baglantisi ve
+      devreye alma planlari icin uzman agent. Kullaniciya PLC marka/model, yazilim, IO ihtiyaci,
+      guvenlik ve saha kosullarini sorar; sonra arastirma agentlariyla dogru donanim ve pin/IO
+      yapisini dogrular.
+  capabilities:
+    reasoning: react
+    maxSteps: 160
+    memory:
+      type: summary
+      maxTokens: 256000
+    streaming: true
+    multiModal: true
+  models:
+    preferred:
+      - deepseek-v4-pro
+      - chatgpt-5.5
+      - claude-opus-4.7
+      - gemini-2.5-pro
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.1
+    maxOutputTokens: 48000
+  tools:
+    - $ref: tools/web-search
+    - $ref: tools/file-reader
+    - name: io-map-builder
+      type: builtin
+      description: Builds PLC input/output maps, addressing tables, and wiring assumptions.
+      permissions: [read]
+    - name: plc-program-planner
+      type: builtin
+      description: Produces ladder logic, structured text, function block plans, and test procedures.
+      permissions: [read, write]
+    - name: safety-checklist
+      type: builtin
+      description: Checks emergency stop, interlocks, fail-safe states, and commissioning risks.
+      permissions: [read]
+  permissions:
+    read: full
+    write: approved
+    network: full
+    execute: approved
+    mcp: approved
+    social: none
+    system: approved
+  lifecycle:
+    longRunning: true
+    resumable: true
+    budgetPolicy: quota-bound
+    checkpointIntervalSeconds: 120
+    heartbeatSeconds: 30
+    communicationFiles:
+      - AGENT_PLAN.md
+      - QUESTIONS.md
+      - RESEARCH_NOTES.md
+      - IO_MAP.md
+      - PLC_PROGRAM.md
+      - TEST_PLAN.md
+      - FINAL_DELIVERY.md
+  riskLevel: high
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 86400
+    maxApiCalls: 2000
+    maxTokenBudget: 8000000
+    sandboxed: true
+    allowedDomains:
+      - "*.siemens.com"
+      - "*.rockwellautomation.com"
+      - "*.omron.com"
+      - "*.mitsubishielectric.com"
+      - "*.schneider-electric.com"
+      - "*.beckhoff.com"
+      - "*.phoenixcontact.com"
+      - "*.wago.com"
+      - "*.codesys.com"
+      - "*.github.com"
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions:
+        - plc-program-write
+        - terminal-command
+        - external-tool
+        - safety-critical-output
+        - hardware-io-map
+  io:
+    input:
+      accepts: [text, code, file, image, url]
+      maxFileSize: 100MB
+    output:
+      formats: [markdown, code, json, csv, artifact]
+      artifacts: true

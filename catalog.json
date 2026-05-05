@@ -1,0 +1,862 @@
+{
+  "schemaVersion": "supportai.catalog.v1",
+  "generatedAt": "2026-05-05T12:57:05.496Z",
+  "source": "supportai-agents",
+  "agentCount": 15,
+  "agents": [
+    {
+      "id": "code-architect",
+      "name": "Code Architect",
+      "nameEN": "Code Architect",
+      "version": "2.0.0",
+      "author": "supportai-team",
+      "avatar": "KM",
+      "color": "#6366f1",
+      "category": "development",
+      "maturity": "stable",
+      "bucket": "official",
+      "tags": [
+        "code",
+        "architecture",
+        "refactoring",
+        "planning",
+        "tech-debt",
+        "review",
+        "migration"
+      ],
+      "description": "Code Architect official SupportAI agent.",
+      "reasoning": "react",
+      "maxSteps": 50,
+      "multiModal": false,
+      "preferredModels": [
+        "claude-opus-4.7",
+        "deepseek-v4-pro",
+        "chatgpt-5.5"
+      ],
+      "minimumModel": "deepseek-v4-pro",
+      "tools": [
+        "file-reader",
+        "code-executor",
+        "web-search",
+        "dependency-analyzer",
+        "ast-analyzer",
+        "git-history",
+        "file-writer"
+      ],
+      "permissions": {},
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "code",
+        "file"
+      ],
+      "outputFormats": [
+        "markdown",
+        "code",
+        "json",
+        "artifact"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/code-architect"
+    },
+    {
+      "id": "deep-search",
+      "name": "Deep Search",
+      "nameEN": "Deep Search",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "DS",
+      "color": "#0f766e",
+      "category": "research",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "research",
+        "web",
+        "synthesis",
+        "citations"
+      ],
+      "description": "Derin web arastirmasi, kaynak karsilastirma, haber takibi ve karar destegi icin kanit odakli arastirma agenti.",
+      "reasoning": "react",
+      "maxSteps": 80,
+      "multiModal": true,
+      "preferredModels": [
+        "gemini-2.5-pro",
+        "chatgpt-5.5",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "web-search",
+        "source-ranker"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "none",
+        "network": "full",
+        "execute": "none",
+        "mcp": "limited",
+        "social": "none",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file",
+        "image",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "csv",
+        "artifact"
+      ],
+      "riskLevel": "medium",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/deep-search"
+    },
+    {
+      "id": "mcp-operator",
+      "name": "MCP Operator",
+      "nameEN": "MCP Operator",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "MC",
+      "color": "#7c3aed",
+      "category": "devops",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "mcp",
+        "connectors",
+        "automation",
+        "integrations"
+      ],
+      "description": "MCP server ve connector islemlerini planlar, yetki kapsamlarini denetler, kullanici verisi uzerinde approval tabanli entegrasyon calistirir.",
+      "reasoning": "react",
+      "maxSteps": 100,
+      "multiModal": false,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "claude-opus-4.7",
+        "deepseek-v4-pro"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "mcp-dispatcher"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "approved",
+        "execute": "none",
+        "mcp": "approved",
+        "social": "approved",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "code",
+        "file",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "artifact"
+      ],
+      "riskLevel": "high",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/mcp-operator"
+    },
+    {
+      "id": "orchestrator",
+      "name": "Orkestrator",
+      "nameEN": "Orchestrator",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "OR",
+      "color": "#111827",
+      "category": "general",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "orchestration",
+        "planning",
+        "routing",
+        "governance"
+      ],
+      "description": "SupportAI agent runtime icin ana orkestrasyon agenti. Kullanici hedefini parcalara ayirir, uygun uzman agentlari secer, approval gerektiren adimlari bekletir ve ciktiyi tek bir is akisi haline getirir.",
+      "reasoning": "plan-execute",
+      "maxSteps": 80,
+      "multiModal": true,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "claude-opus-4.7",
+        "gemini-2.5-pro"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "agent-router",
+        "approval-gate"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "limited",
+        "execute": "none",
+        "mcp": "approved",
+        "social": "none",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "code",
+        "file",
+        "image",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "artifact"
+      ],
+      "riskLevel": "medium",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/orchestrator"
+    },
+    {
+      "id": "pcb-embedded-engineer",
+      "name": "PCB Embedded Engineer",
+      "nameEN": "PCB Embedded Engineer",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "PE",
+      "color": "#16a34a",
+      "category": "development",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "pcb",
+        "embedded",
+        "stm32",
+        "firmware",
+        "electronics"
+      ],
+      "description": "PCB, gomulu yazilim, STM32CubeIDE ve firmware planlari icin teknik agent. V1'de tasarim kontrolu, kod taslagi ve connector hazirligi uretir.",
+      "reasoning": "react",
+      "maxSteps": 100,
+      "multiModal": true,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "claude-opus-4.7",
+        "deepseek-v4-pro"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "file-reader",
+        "firmware-planner"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "limited",
+        "execute": "approved",
+        "mcp": "approved",
+        "social": "none",
+        "system": "approved"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "code",
+        "file",
+        "image"
+      ],
+      "outputFormats": [
+        "markdown",
+        "code",
+        "json",
+        "artifact"
+      ],
+      "riskLevel": "high",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/pcb-embedded-engineer"
+    },
+    {
+      "id": "plc-automation-engineer",
+      "name": "PLC Automation Engineer",
+      "nameEN": "PLC Automation Engineer",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "PL",
+      "color": "#2563eb",
+      "category": "development",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "plc",
+        "automation",
+        "ladder",
+        "structured-text",
+        "industrial-control",
+        "scada"
+      ],
+      "description": "PLC, endustriyel otomasyon, ladder logic, structured text, IO map, sensor/aktor baglantisi ve devreye alma planlari icin uzman agent. Kullaniciya PLC marka/model, yazilim, IO ihtiyaci, guvenlik ve saha kosullarini sorar; sonra arastirma agentlariyla dogru donanim ve pin/IO yapisini dogrular.",
+      "reasoning": "react",
+      "maxSteps": 160,
+      "multiModal": true,
+      "preferredModels": [
+        "deepseek-v4-pro",
+        "chatgpt-5.5",
+        "claude-opus-4.7",
+        "gemini-2.5-pro"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "web-search",
+        "file-reader",
+        "io-map-builder",
+        "plc-program-planner",
+        "safety-checklist"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "full",
+        "execute": "approved",
+        "mcp": "approved",
+        "social": "none",
+        "system": "approved"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [
+        "AGENT_PLAN.md",
+        "QUESTIONS.md",
+        "RESEARCH_NOTES.md",
+        "IO_MAP.md",
+        "PLC_PROGRAM.md",
+        "TEST_PLAN.md",
+        "FINAL_DELIVERY.md"
+      ],
+      "accepts": [
+        "text",
+        "code",
+        "file",
+        "image",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "code",
+        "json",
+        "csv",
+        "artifact"
+      ],
+      "riskLevel": "high",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/plc-automation-engineer"
+    },
+    {
+      "id": "product-manager",
+      "name": "Product Manager",
+      "nameEN": "Product Manager",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "PM",
+      "color": "#8b5cf6",
+      "category": "management",
+      "maturity": "stable",
+      "bucket": "official",
+      "tags": [
+        "product",
+        "roadmap",
+        "planning",
+        "sprint",
+        "user-story"
+      ],
+      "description": "Product Manager official SupportAI agent.",
+      "reasoning": "chain-of-thought",
+      "maxSteps": 20,
+      "multiModal": false,
+      "preferredModels": [
+        "gpt-4o",
+        "gemini-2.5-pro",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o-mini",
+      "tools": [
+        "web-search"
+      ],
+      "permissions": {},
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/product-manager"
+    },
+    {
+      "id": "quiz-builder",
+      "name": "Quiz Builder",
+      "nameEN": "Quiz Builder",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "QB",
+      "color": "#f59e0b",
+      "category": "education",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "quiz",
+        "education",
+        "assessment",
+        "exams"
+      ],
+      "description": "Dokuman, konu veya ders hedefinden olculenebilir quiz, sinav, cevap anahtari ve aciklama seti uretir.",
+      "reasoning": "plan-execute",
+      "maxSteps": 30,
+      "multiModal": true,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "gemini-2.5-pro",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o-mini",
+      "tools": [
+        "file-reader",
+        "rubric-builder"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "none",
+        "network": "limited",
+        "execute": "none",
+        "mcp": "none",
+        "social": "none",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file",
+        "image"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "csv",
+        "artifact"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/quiz-builder"
+    },
+    {
+      "id": "researcher",
+      "name": "Researcher",
+      "nameEN": "Researcher",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "AR",
+      "color": "#10b981",
+      "category": "research",
+      "maturity": "stable",
+      "bucket": "official",
+      "tags": [
+        "research",
+        "analysis",
+        "synthesis",
+        "fact-checking",
+        "report"
+      ],
+      "description": "Researcher official SupportAI agent.",
+      "reasoning": "react",
+      "maxSteps": 40,
+      "multiModal": false,
+      "preferredModels": [
+        "gemini-2.5-pro",
+        "gpt-4o",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o-mini",
+      "tools": [
+        "web-search",
+        "file-reader",
+        "citation-formatter"
+      ],
+      "permissions": {},
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "csv"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/researcher"
+    },
+    {
+      "id": "social-growth-agent",
+      "name": "Social Growth Agent",
+      "nameEN": "Social Growth Agent",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "SG",
+      "color": "#db2777",
+      "category": "creative",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "social",
+        "marketing",
+        "growth",
+        "content",
+        "instagram"
+      ],
+      "description": "SupportAI ve kullanici projeleri icin sosyal medya stratejisi, icerik takvimi, kampanya ve buyume planlari uretir. Paylasim islemleri approval ister.",
+      "reasoning": "plan-execute",
+      "maxSteps": 80,
+      "multiModal": true,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "gemini-2.5-pro",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "content-calendar",
+        "social-connector"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "approved",
+        "execute": "none",
+        "mcp": "approved",
+        "social": "approved",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file",
+        "image",
+        "video",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "artifact",
+        "image"
+      ],
+      "riskLevel": "high",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/social-growth-agent"
+    },
+    {
+      "id": "studio",
+      "name": "Studio",
+      "nameEN": "Studio",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "ST",
+      "color": "#ec4899",
+      "category": "creative",
+      "maturity": "stable",
+      "bucket": "official",
+      "tags": [
+        "creative",
+        "image",
+        "video",
+        "prompt",
+        "generation"
+      ],
+      "description": "Studio official SupportAI agent.",
+      "reasoning": "chain-of-thought",
+      "maxSteps": 15,
+      "multiModal": true,
+      "preferredModels": [
+        "gpt-4o",
+        "gemini-2.5-pro",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o-mini",
+      "tools": [
+        "web-search"
+      ],
+      "permissions": {},
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "image",
+        "video"
+      ],
+      "outputFormats": [
+        "markdown",
+        "text"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/studio"
+    },
+    {
+      "id": "system-planner",
+      "name": "System Planner",
+      "nameEN": "System Planner",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "SP",
+      "color": "#0891b2",
+      "category": "management",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "planning",
+        "roadmap",
+        "operations",
+        "life-management"
+      ],
+      "description": "Gunluk is, proje, hedef ve karar planlarini takvimlenebilir, takip edilebilir ve agentlara dagitilabilir sistemlere donusturur.",
+      "reasoning": "plan-execute",
+      "maxSteps": 60,
+      "multiModal": true,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "claude-sonnet-4",
+        "gemini-2.5-pro"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "plan-board"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "limited",
+        "execute": "none",
+        "mcp": "approved",
+        "social": "none",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file",
+        "image",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "artifact"
+      ],
+      "riskLevel": "medium",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/system-planner"
+    },
+    {
+      "id": "terminal-operator",
+      "name": "Terminal Operator",
+      "nameEN": "Terminal Operator",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "TO",
+      "color": "#374151",
+      "category": "devops",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "terminal",
+        "devops",
+        "automation",
+        "cli"
+      ],
+      "description": "Terminal ve CLI gorevlerini guvenli approval kapilariyla planlar. V1'de connector hazirligi ve dry-run odakli calisir.",
+      "reasoning": "react",
+      "maxSteps": 80,
+      "multiModal": false,
+      "preferredModels": [
+        "chatgpt-5.5",
+        "claude-opus-4.7",
+        "deepseek-v4-pro"
+      ],
+      "minimumModel": "gpt-4o",
+      "tools": [
+        "terminal-plan"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "approved",
+        "network": "approved",
+        "execute": "approved",
+        "mcp": "approved",
+        "social": "none",
+        "system": "approved"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "code",
+        "file"
+      ],
+      "outputFormats": [
+        "markdown",
+        "code",
+        "json",
+        "artifact"
+      ],
+      "riskLevel": "critical",
+      "rootApprovalRequired": true,
+      "outputArtifacts": true,
+      "path": "agents/official/terminal-operator"
+    },
+    {
+      "id": "ui-designer",
+      "name": "UI Designer",
+      "nameEN": "UI Designer",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "UI",
+      "color": "#0ea5e9",
+      "category": "design",
+      "maturity": "stable",
+      "bucket": "official",
+      "tags": [
+        "ui",
+        "design",
+        "responsive",
+        "css",
+        "frontend"
+      ],
+      "description": "UI Designer official SupportAI agent.",
+      "reasoning": "chain-of-thought",
+      "maxSteps": 20,
+      "multiModal": true,
+      "preferredModels": [
+        "gpt-4o",
+        "claude-sonnet-4",
+        "gemini-2.5-pro"
+      ],
+      "minimumModel": "gpt-4o-mini",
+      "tools": [
+        "web-search",
+        "file-reader",
+        "color-palette"
+      ],
+      "permissions": {},
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "code",
+        "image",
+        "file"
+      ],
+      "outputFormats": [
+        "markdown",
+        "code",
+        "html"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/ui-designer"
+    },
+    {
+      "id": "data-analyst",
+      "name": "Veri Analisti",
+      "nameEN": "Data Analyst",
+      "version": "1.0.0",
+      "author": "supportai-team",
+      "avatar": "DA",
+      "color": "#f59e0b",
+      "category": "analytics",
+      "maturity": "stable",
+      "bucket": "official",
+      "tags": [
+        "data",
+        "analysis",
+        "csv",
+        "pdf",
+        "table",
+        "visualization"
+      ],
+      "description": "Data Analyst official SupportAI agent.",
+      "reasoning": "react",
+      "maxSteps": 30,
+      "multiModal": true,
+      "preferredModels": [
+        "gpt-4o",
+        "gemini-2.5-pro",
+        "claude-sonnet-4"
+      ],
+      "minimumModel": "gpt-4o-mini",
+      "tools": [
+        "file-reader",
+        "calculator",
+        "code-executor",
+        "chart-generator"
+      ],
+      "permissions": {},
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [],
+      "accepts": [
+        "text",
+        "file",
+        "image",
+        "code"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "csv",
+        "code"
+      ],
+      "riskLevel": "low",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/data-analyst"
+    }
+  ]
+}

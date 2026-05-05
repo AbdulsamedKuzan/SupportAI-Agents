@@ -1,0 +1,27 @@
+{
+  "name": "supportai-agents",
+  "version": "1.0.0",
+  "description": "Open-source AI agent ecosystem — build, share, and run autonomous agents.",
+  "keywords": ["ai", "agents", "llm", "openai", "gemini", "claude", "autonomous"],
+  "license": "Apache-2.0",
+  "author": "SupportAI Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AbdulsamedKuzan/SupportAI-Agents.git"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-agent.js",
+    "validate:all": "node scripts/validate-all.js",
+    "check:duplicates": "node scripts/check-duplicates.js",
+    "lint:prompts": "node scripts/lint-prompts.js",
+    "security:scan": "node scripts/security-scan.js",
+    "security:governance": "node scripts/check-governance.js",
+    "build:catalog": "node scripts/build-catalog.js"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "js-yaml": "^4.1.0",
+    "glob": "^11.0.0"
+  }
+}

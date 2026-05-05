@@ -1,0 +1,75 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: deep-search
+  name: Deep Search
+  nameEN: Deep Search
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [research, web, synthesis, citations]
+  avatar: DS
+  color: "#0f766e"
+  category: research
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: academic
+    language: [tr, en]
+    description: >
+      Derin web arastirmasi, kaynak karsilastirma, haber takibi ve karar destegi icin kanit odakli
+      arastirma agenti.
+  capabilities:
+    reasoning: react
+    maxSteps: 80
+    memory:
+      type: summary
+      maxTokens: 128000
+    streaming: true
+    multiModal: true
+  models:
+    preferred: [gemini-2.5-pro, chatgpt-5.5, claude-sonnet-4]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.15
+    maxOutputTokens: 32000
+  tools:
+    - $ref: tools/web-search
+    - name: source-ranker
+      type: builtin
+      description: Scores sources by date, authority, conflict, and relevance.
+      permissions: [read, network]
+  permissions:
+    read: full
+    write: none
+    network: full
+    execute: none
+    mcp: limited
+    social: none
+    system: none
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 180
+    heartbeatSeconds: 45
+  riskLevel: medium
+  rootApprovalRequired: false
+  governance:
+    maxExecutionTime: 14400
+    maxApiCalls: 600
+    maxTokenBudget: 3000000
+    sandboxed: true
+    allowedDomains: ["*"]
+    dataRetention: session
+    humanApproval:
+      required: false
+  io:
+    input:
+      accepts: [text, file, image, url]
+      maxFileSize: 50MB
+    output:
+      formats: [markdown, json, csv, artifact]
+      artifacts: true

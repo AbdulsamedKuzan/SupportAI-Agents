@@ -1,0 +1,27 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: calculator
+  name: Calculator
+  version: 1.0.0
+  description: Performs mathematical calculations with high precision.
+
+spec:
+  description: >
+    Evaluates mathematical expressions safely. Supports arithmetic,
+    trigonometry, statistics, and unit conversions. No code execution —
+    uses a safe math parser.
+  parameters:
+    - name: expression
+      type: string
+      required: true
+      description: "Mathematical expression (e.g., 'sqrt(144) + log(100)')"
+    - name: precision
+      type: integer
+      required: false
+      default: 6
+      description: Decimal precision for results
+  returns:
+    type: object
+    description: "{ result, expression, steps }"
+  permissions: []

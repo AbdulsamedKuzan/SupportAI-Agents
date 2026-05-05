@@ -1,0 +1,75 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: terminal-operator
+  name: Terminal Operator
+  nameEN: Terminal Operator
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [terminal, devops, automation, cli]
+  avatar: TO
+  color: "#374151"
+  category: devops
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: concise
+    language: [tr, en]
+    description: >
+      Terminal ve CLI gorevlerini guvenli approval kapilariyla planlar. V1'de connector hazirligi ve
+      dry-run odakli calisir.
+  capabilities:
+    reasoning: react
+    maxSteps: 80
+    memory:
+      type: sliding-window
+      maxTokens: 64000
+    streaming: true
+    multiModal: false
+  models:
+    preferred: [chatgpt-5.5, claude-opus-4.7, deepseek-v4-pro]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.1
+    maxOutputTokens: 24000
+  tools:
+    - name: terminal-plan
+      type: builtin
+      description: Produces shell-safe execution plans and dry-run summaries.
+      permissions: [read, terminal]
+  permissions:
+    read: full
+    write: approved
+    network: approved
+    execute: approved
+    mcp: approved
+    social: none
+    system: approved
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 60
+    heartbeatSeconds: 20
+  riskLevel: critical
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 7200
+    maxApiCalls: 300
+    maxTokenBudget: 1500000
+    sandboxed: true
+    allowedDomains: ["*.github.com", "*.npmjs.com", "*.pypi.org", "*.supportai.dev"]
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions: [terminal-command, filesystem-write, network-write, system-change]
+  io:
+    input:
+      accepts: [text, code, file]
+      maxFileSize: 50MB
+    output:
+      formats: [markdown, code, json, artifact]
+      artifacts: true

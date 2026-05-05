@@ -1,0 +1,38 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: code-executor
+  name: Code Executor
+  version: 1.0.0
+  description: Executes code snippets in a sandboxed environment.
+
+spec:
+  description: >
+    Runs code in an isolated sandbox. Supports JavaScript (browser),
+    Python (if node/python runtime available). Returns stdout, stderr,
+    and execution metadata.
+  parameters:
+    - name: code
+      type: string
+      required: true
+      description: Source code to execute
+    - name: language
+      type: string
+      required: true
+      enum: [javascript, python, bash]
+      description: Programming language
+    - name: timeout
+      type: integer
+      required: false
+      default: 30
+      description: Execution timeout in seconds
+  returns:
+    type: object
+    description: "{ stdout, stderr, exitCode, executionTime }"
+  permissions:
+    - execute
+  security:
+    sandboxed: true
+    maxMemoryMB: 256
+    maxCPUSeconds: 30
+    networkAccess: false

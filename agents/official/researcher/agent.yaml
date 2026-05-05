@@ -1,0 +1,65 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: researcher
+  name: Araştırmacı
+  nameEN: Researcher
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [research, analysis, synthesis, fact-checking, report]
+  avatar: AR
+  color: "#10b981"
+  category: research
+  maturity: stable
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: academic
+    language: [tr, en]
+    description: >
+      Uzun doküman, ürün araştırması ve karar destek akışları için yapılandırılmış çıktı üretir.
+      Kaynak doğrulama, karşılaştırmalı analiz ve sentez konularında uzmanlaşmıştır.
+
+  capabilities:
+    reasoning: react
+    maxSteps: 40
+    memory:
+      type: sliding-window
+      maxTokens: 48000
+    streaming: true
+    multiModal: false
+
+  models:
+    preferred: [gemini-2.5-pro, gpt-4o, claude-sonnet-4]
+    minimum: gpt-4o-mini
+    fallback: auto
+    temperature: 0.2
+    maxOutputTokens: 32000
+
+  tools:
+    - $ref: tools/web-search
+    - $ref: tools/file-reader
+    - name: citation-formatter
+      type: builtin
+      description: Formats citations in APA, MLA, or Chicago style
+      permissions: []
+
+  governance:
+    maxExecutionTime: 7200
+    maxApiCalls: 200
+    sandboxed: true
+    allowedDomains: ["*"]
+    dataRetention: session
+    humanApproval:
+      required: false
+
+  io:
+    input:
+      accepts: [text, file, url]
+      maxFileSize: 20MB
+    output:
+      formats: [markdown, json, csv]
+      artifacts: true

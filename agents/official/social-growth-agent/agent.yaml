@@ -1,0 +1,86 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: social-growth-agent
+  name: Social Growth Agent
+  nameEN: Social Growth Agent
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [social, marketing, growth, content, instagram]
+  avatar: SG
+  color: "#db2777"
+  category: creative
+  maturity: official
+  minRuntime: node
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: creative
+    language: [tr, en]
+    description: >
+      SupportAI ve kullanici projeleri icin sosyal medya stratejisi, icerik takvimi, kampanya ve buyume
+      planlari uretir. Paylasim islemleri approval ister.
+  capabilities:
+    reasoning: plan-execute
+    maxSteps: 80
+    memory:
+      type: summary
+      maxTokens: 128000
+    streaming: true
+    multiModal: true
+  models:
+    preferred: [chatgpt-5.5, gemini-2.5-pro, claude-sonnet-4]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.55
+    maxOutputTokens: 24000
+  tools:
+    - name: content-calendar
+      type: builtin
+      description: Builds campaign calendars, post variants, captions, and creative briefs.
+      permissions: [read]
+    - name: social-connector
+      type: mcp
+      description: Posts or schedules content only through approved social connectors.
+      permissions: [social, network]
+  permissions:
+    read: full
+    write: approved
+    network: approved
+    execute: none
+    mcp: approved
+    social: approved
+    system: none
+  mcp:
+    approvalPolicy: user-and-root
+    servers:
+      - id: instagram
+        name: Instagram
+        requiredScopes: [profile:read, media:write]
+        approvalPolicy: user-and-root
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 300
+    heartbeatSeconds: 60
+  riskLevel: high
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 21600
+    maxApiCalls: 800
+    maxTokenBudget: 3000000
+    sandboxed: true
+    allowedDomains: ["*.instagram.com", "*.facebook.com", "*.supportai.dev"]
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions: [social-post, paid-campaign, external-message]
+  io:
+    input:
+      accepts: [text, file, image, video, url]
+      maxFileSize: 100MB
+    output:
+      formats: [markdown, json, artifact, image]
+      artifacts: true

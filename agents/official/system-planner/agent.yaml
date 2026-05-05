@@ -1,0 +1,75 @@
+apiVersion: supportai/v1
+kind: Agent
+metadata:
+  id: system-planner
+  name: System Planner
+  nameEN: System Planner
+  version: 1.0.0
+  author: supportai-team
+  license: Apache-2.0
+  tags: [planning, roadmap, operations, life-management]
+  avatar: SP
+  color: "#0891b2"
+  category: management
+  maturity: official
+  minRuntime: browser
+
+spec:
+  identity:
+    systemPromptFile: system.md
+    personality: professional
+    language: [tr, en]
+    description: >
+      Gunluk is, proje, hedef ve karar planlarini takvimlenebilir, takip edilebilir ve agentlara
+      dagitilabilir sistemlere donusturur.
+  capabilities:
+    reasoning: plan-execute
+    maxSteps: 60
+    memory:
+      type: summary
+      maxTokens: 128000
+    streaming: true
+    multiModal: true
+  models:
+    preferred: [chatgpt-5.5, claude-sonnet-4, gemini-2.5-pro]
+    minimum: gpt-4o
+    fallback: auto
+    temperature: 0.25
+    maxOutputTokens: 24000
+  tools:
+    - name: plan-board
+      type: builtin
+      description: Creates milestones, checkpoints, and delegated agent work packages.
+      permissions: [read]
+  permissions:
+    read: full
+    write: approved
+    network: limited
+    execute: none
+    mcp: approved
+    social: none
+    system: none
+  lifecycle:
+    longRunning: true
+    resumable: true
+    checkpointIntervalSeconds: 300
+    heartbeatSeconds: 60
+  riskLevel: medium
+  rootApprovalRequired: true
+  governance:
+    maxExecutionTime: 14400
+    maxApiCalls: 500
+    maxTokenBudget: 2000000
+    sandboxed: true
+    allowedDomains: ["*.supportai.dev"]
+    dataRetention: session
+    humanApproval:
+      required: true
+      forActions: [calendar-write, external-write]
+  io:
+    input:
+      accepts: [text, file, image, url]
+      maxFileSize: 25MB
+    output:
+      formats: [markdown, json, artifact]
+      artifacts: true

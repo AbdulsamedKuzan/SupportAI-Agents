@@ -1,0 +1,145 @@
+# ┌──────────────────────────────────────────────────────┐
+# │  SupportAI Agent Manifest Template                   │
+# │  Copy this file and fill in your agent's details.    │
+# │  See agent-schema.json for full validation rules.    │
+# └──────────────────────────────────────────────────────┘
+
+apiVersion: supportai/v1
+kind: Agent
+
+metadata:
+  # REQUIRED: Unique ID — lowercase, kebab-case, 3-64 chars
+  id: your-agent-name
+
+  # REQUIRED: Display name
+  name: Your Agent Name
+
+  # OPTIONAL: English name (for non-English agents)
+  # nameEN: Your Agent Name
+
+  # REQUIRED: Semantic version
+  version: 1.0.0
+
+  # REQUIRED: Your GitHub username
+  author: your-github-username
+
+  # REQUIRED: License (Apache-2.0 recommended)
+  license: Apache-2.0
+
+  # REQUIRED: Tags for discovery (1-10 tags, lowercase)
+  tags: [tag1, tag2, tag3]
+
+  # OPTIONAL: 1-4 character avatar code for UI display
+  avatar: YA
+
+  # OPTIONAL: Hex color for agent card
+  color: "#6366f1"
+
+  # REQUIRED: Category — see CONTRIBUTING.md for full list
+  # Options: development, design, research, analytics, management,
+  #          creative, education, health, legal, finance,
+  #          accessibility, translation, devops, security, general
+  category: general
+
+  # OPTIONAL: Maturity level (default: experimental)
+  maturity: experimental
+
+  # OPTIONAL: Minimum runtime required (default: browser)
+  minRuntime: browser
+
+spec:
+  # ─── IDENTITY ───
+  identity:
+    # Path to system prompt file
+    systemPromptFile: system.md
+
+    # Communication style: professional, friendly, academic, creative, concise
+    personality: professional
+
+    # Supported languages (ISO 639-1)
+    language: [en]
+
+    # REQUIRED: What does this agent do? (10-500 chars)
+    description: >
+      A brief description of what your agent does and what
+      problems it solves for users.
+
+  # ─── CAPABILITIES ───
+  capabilities:
+    # Reasoning strategy:
+    #   direct           — Single-shot response
+    #   chain-of-thought — Step-by-step thinking
+    #   react            — ReAct loop with tool use (autonomous)
+    #   plan-execute     — Create plan, then execute steps
+    reasoning: chain-of-thought
+
+    # Max steps before forced termination (1-200)
+    maxSteps: 15
+
+    # Memory management
+    memory:
+      type: sliding-window   # none, sliding-window, summary, full
+      maxTokens: 16000
+
+    # Enable streaming output
+    streaming: true
+
+    # Can process images/audio/video?
+    # multiModal: false
+
+  # ─── MODELS ───
+  models:
+    # Preferred models in priority order
+    preferred: [gpt-4o, gemini-2.5-pro]
+
+    # Minimum capable model
+    minimum: gpt-4o-mini
+
+    # Fallback behavior: auto = runtime picks best available
+    fallback: auto
+
+    # Optional: Default temperature (0-2)
+    # temperature: 0.5
+
+  # ─── TOOLS ───
+  # Reference shared tools or define inline tools
+  tools: []
+    # Example: Reference a shared tool
+    # - $ref: tools/web-search
+    #
+    # Example: Define an inline tool
+    # - name: my-tool
+    #   type: builtin
+    #   description: What this tool does
+    #   permissions: [read]
+
+  # ─── GOVERNANCE ───
+  governance:
+    # Max execution time in seconds
+    maxExecutionTime: 300
+
+    # Max LLM API calls per task
+    maxApiCalls: 50
+
+    # Run in isolated sandbox
+    sandboxed: true
+
+    # Allowed network domains (empty = no network)
+    # allowedDomains: ["*"]
+
+    # Data retention policy
+    dataRetention: none   # none, session, persistent
+
+    # Human approval for dangerous actions
+    # humanApproval:
+    #   required: false
+    #   forActions: [file-write]
+
+  # ─── INPUT/OUTPUT ───
+  io:
+    input:
+      accepts: [text]
+      maxFileSize: 10MB
+    output:
+      formats: [markdown]
+      artifacts: false

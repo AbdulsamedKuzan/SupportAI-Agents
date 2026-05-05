@@ -1,0 +1,33 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: file-reader
+  name: File Reader
+  version: 1.0.0
+  description: Reads and parses files in various formats (PDF, CSV, JSON, text, code).
+
+spec:
+  description: >
+    Reads file content from user-uploaded files or local filesystem (sandboxed).
+    Supports PDF text extraction, CSV parsing, JSON parsing, and plain text.
+  parameters:
+    - name: fileId
+      type: string
+      required: true
+      description: File identifier or path
+    - name: format
+      type: string
+      required: false
+      enum: [auto, text, json, csv, pdf]
+      default: auto
+      description: Parse format (auto-detected if not specified)
+    - name: maxChars
+      type: integer
+      required: false
+      default: 50000
+      description: Maximum characters to read
+  returns:
+    type: object
+    description: Parsed file content with metadata (name, size, type, content)
+  permissions:
+    - filesystem-read

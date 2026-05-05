@@ -1,0 +1,154 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: code-architect-tools
+  name: Code Architect Specialized Tools
+  version: 2.0.0
+  description: Specialized tools for the Code Architect agent.
+
+tools:
+  # ─── AST ANALYZER ───
+  - id: ast-analyzer
+    name: AST Analyzer
+    description: >
+      Extracts Abstract Syntax Tree from source code files.
+      Returns function signatures, class hierarchies, import graph,
+      cyclomatic complexity scores, and dead code detection.
+    parameters:
+      - name: filePath
+        type: string
+        required: true
+        description: Path to the source file to analyze
+      - name: language
+        type: string
+        required: false
+        enum: [javascript, typescript, python, java, go, rust, csharp, kotlin, swift, cpp]
+        description: Language of the source file (auto-detected if not specified)
+      - name: analysis
+        type: array
+        required: false
+        items:
+          type: string
+          enum: [functions, classes, imports, complexity, dead-code, dependencies]
+        default: [functions, classes, imports, complexity]
+        description: Which analyses to perform
+    returns:
+      type: object
+      description: |
+        {
+          functions: [{ name, params, returnType, lineStart, lineEnd, complexity }],
+          classes: [{ name, extends, implements, methods, properties }],
+          imports: [{ source, specifiers, isDefault, isDynamic }],
+          complexity: { cyclomatic, cognitive, maintainability },
+          deadCode: [{ type, name, line, reason }],
+          stats: { totalLines, codeLines, commentLines, blankLines }
+        }
+    permissions: [read]
+
+  # ─── GIT HISTORY ANALYZER ───
+  - id: git-history
+    name: Git History Analyzer
+    description: >
+      Analyzes git repository history. Finds hotspot files (most changed),
+      churn rates, contributor patterns, and recent changes.
+    parameters:
+      - name: path
+        type: string
+        required: false
+        default: "."
+        description: Repository path or specific file/directory to analyze
+      - name: analysis
+        type: string
+        required: true
+        enum: [hotspots, churn, blame, log, diff, contributors]
+        description: Type of git analysis to perform
+      - name: since
+        type: string
+        required: false
+        default: "6 months ago"
+        description: Time range for analysis (git date format)
+      - name: limit
+        type: integer
+        required: false
+        default: 20
+        description: Maximum number of results
+    returns:
+      type: object
+      description: |
+        For hotspots: [{ file, changeCount, uniqueAuthors, lastChanged }]
+        For churn: [{ file, additions, deletions, net, commits }]
+        For blame: [{ line, author, date, commit, content }]
+        For log: [{ hash, author, date, message, filesChanged }]
+        For diff: { additions, deletions, files: [{ path, status, diff }] }
+        For contributors: [{ name, commits, additions, deletions, firstCommit, lastCommit }]
+    permissions: [read]
+
+  # ─── DEPENDENCY ANALYZER ───
+  - id: dependency-analyzer
+    name: Dependency Analyzer
+    description: >
+      Analyzes project dependency trees from manifest files
+      (package.json, requirements.txt, go.mod, Cargo.toml, pom.xml, etc.).
+      Detects version conflicts, unused dependencies, security vulnerabilities,
+      and outdated packages.
+    parameters:
+      - name: manifestPath
+        type: string
+        required: false
+        default: auto
+        description: Path to manifest file (auto-detected if not specified)
+      - name: analysis
+        type: array
+        required: false
+        items:
+          type: string
+          enum: [tree, outdated, unused, security, duplicates, size]
+        default: [tree, outdated, security]
+        description: Which analyses to perform
+    returns:
+      type: object
+      description: |
+        {
+          manifest: { type, path, dependencies, devDependencies },
+          tree: { depth, totalPackages, directDeps, transitiveDeps },
+          outdated: [{ name, current, latest, type, breaking }],
+          unused: [{ name, declaredIn, reason }],
+          security: [{ name, severity, advisory, fixVersion }],
+          duplicates: [{ name, versions: [], locations: [] }],
+          size: { totalKB, largest: [{ name, sizeKB }] }
+        }
+    permissions: [read, network]
+
+  # ─── FILE WRITER (APPROVED) ───
+  - id: file-writer
+    name: File Writer
+    description: >
+      Creates new files or modifies existing files. Shows a unified diff
+      before applying changes. ALWAYS requires human approval.
+    parameters:
+      - name: filePath
+        type: string
+        required: true
+        description: Absolute or relative path to the target file
+      - name: operation
+        type: string
+        required: true
+        enum: [create, edit, rename, delete]
+        description: Operation to perform
+      - name: content
+        type: string
+        required: false
+        description: Full file content (for create) or replacement content (for edit)
+      - name: diff
+        type: string
+        required: false
+        description: Unified diff format for targeted edits
+      - name: newPath
+        type: string
+        required: false
+        description: New path (for rename operation)
+    returns:
+      type: object
+      description: "{ success, operation, path, diff, bytesWritten }"
+    permissions: [write]
+    requiresApproval: true
