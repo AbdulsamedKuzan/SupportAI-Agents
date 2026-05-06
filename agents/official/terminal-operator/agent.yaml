@@ -31,8 +31,11 @@ spec:
     streaming: true
     multiModal: false
   models:
-    preferred: [chatgpt-5.5, claude-opus-4.7, deepseek-v4-pro]
-    minimum: gpt-4o
+    preferred:
+      - claude-opus-4-7
+      - gpt-5.4
+      - grok-4.3
+    minimum: claude-sonnet-4-6
     fallback: auto
     temperature: 0.1
     maxOutputTokens: 24000

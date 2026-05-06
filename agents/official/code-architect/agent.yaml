@@ -36,14 +36,13 @@ spec:
 
   models:
     preferred:
-      - claude-opus-4.7          # Anthropic — en güçlü reasoning
-      - deepseek-v4-pro          # DeepSeek — maliyet-etkin uzun bağlam
-      - chatgpt-5.5              # OpenAI — en güncel GPT
-    minimum: deepseek-v4-pro
+      - claude-opus-4-7
+      - gpt-5.4
+      - deepseek-v4-pro
+    minimum: claude-sonnet-4-6
     fallback: auto
     temperature: 0.2
     maxOutputTokens: 32000
-
   tools:
     # ─── Dosya okuma: Kod tabanını analiz etmek için ───
     - $ref: tools/file-reader

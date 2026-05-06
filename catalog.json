@@ -1,7 +1,9 @@
 {
   "schemaVersion": "supportai.catalog.v1",
-  "generatedAt": "2026-05-06T08:13:36.300Z",
+  "generatedAt": "2026-05-06T08:49:14.581Z",
   "source": "supportai-agents",
+  "modelRegistryVersion": "supportai.model-registry.v1",
+  "modelSelectionPolicy": "matrix-first",
   "agentCount": 15,
   "agents": [
     {
@@ -29,11 +31,58 @@
       "maxSteps": 50,
       "multiModal": false,
       "preferredModels": [
-        "claude-opus-4.7",
-        "deepseek-v4-pro",
-        "chatgpt-5.5"
+        "claude-opus-4-7",
+        "gpt-5.4",
+        "deepseek-v4-pro"
       ],
-      "minimumModel": "deepseek-v4-pro",
+      "minimumModel": "claude-sonnet-4-6",
+      "modelProfile": [
+        {
+          "id": "claude-opus-4-7",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "S",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 5,
+          "outputUsdPerM": 25,
+          "cacheHitUsdPerM": 0.5,
+          "description": "Safety-critical kod, PLC, terminal ve multi-file refactor icin frontier model."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "provider": "DeepSeek",
+          "providerKey": "deepseek",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 0.435,
+          "outputUsdPerM": 0.87,
+          "cacheHitUsdPerM": 0.003625,
+          "description": "Maliyet-etkin uzun baglamli uretim kodu, planlama ve teknik cikti modeli."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "file-reader",
         "code-executor",
@@ -85,10 +134,57 @@
       "multiModal": true,
       "preferredModels": [
         "gemini-2.5-pro",
-        "chatgpt-5.5",
-        "claude-sonnet-4"
+        "gpt-5.4",
+        "grok-4.3"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "gemini-2.5-flash",
+      "modelProfile": [
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "grok-4.3",
+          "provider": "xAI",
+          "providerKey": "grok",
+          "tier": "S",
+          "context": "256K",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": null,
+          "description": "Ucuz output ve guclu reasoning dengesi; sosyal ve genis planlama icin sweet spot."
+        },
+        {
+          "id": "gemini-2.5-flash",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "B",
+          "context": "1M",
+          "inputUsdPerM": 0.3,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": 0.03,
+          "description": "1M context ile ucuz arastirma, belge okuma ve hacimli ozet isleri."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search",
         "source-ranker"
@@ -143,11 +239,58 @@
       "maxSteps": 100,
       "multiModal": false,
       "preferredModels": [
-        "chatgpt-5.5",
-        "claude-opus-4.7",
-        "deepseek-v4-pro"
+        "claude-sonnet-4-6",
+        "gpt-5.4",
+        "gemini-2.5-pro"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "claude-haiku-4-5",
+      "modelProfile": [
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "claude-haiku-4-5",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "B",
+          "context": "200K",
+          "inputUsdPerM": 1,
+          "outputUsdPerM": 5,
+          "cacheHitUsdPerM": 0.1,
+          "description": "Anthropic ucuz modeli; tool calling, kisa cevap ve guvenli fallback."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "mcp-dispatcher"
       ],
@@ -200,11 +343,58 @@
       "maxSteps": 80,
       "multiModal": true,
       "preferredModels": [
-        "chatgpt-5.5",
-        "claude-opus-4.7",
-        "gemini-2.5-pro"
+        "claude-sonnet-4-6",
+        "gpt-5.4",
+        "grok-4.3"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "deepseek-v4-pro",
+      "modelProfile": [
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "grok-4.3",
+          "provider": "xAI",
+          "providerKey": "grok",
+          "tier": "S",
+          "context": "256K",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": null,
+          "description": "Ucuz output ve guclu reasoning dengesi; sosyal ve genis planlama icin sweet spot."
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "provider": "DeepSeek",
+          "providerKey": "deepseek",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 0.435,
+          "outputUsdPerM": 0.87,
+          "cacheHitUsdPerM": 0.003625,
+          "description": "Maliyet-etkin uzun baglamli uretim kodu, planlama ve teknik cikti modeli."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "agent-router",
         "approval-gate"
@@ -260,11 +450,58 @@
       "maxSteps": 100,
       "multiModal": true,
       "preferredModels": [
-        "chatgpt-5.5",
-        "claude-opus-4.7",
-        "deepseek-v4-pro"
+        "claude-opus-4-7",
+        "gpt-5.4",
+        "gemini-2.5-pro"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "deepseek-v4-pro",
+      "modelProfile": [
+        {
+          "id": "claude-opus-4-7",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "S",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 5,
+          "outputUsdPerM": 25,
+          "cacheHitUsdPerM": 0.5,
+          "description": "Safety-critical kod, PLC, terminal ve multi-file refactor icin frontier model."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "provider": "DeepSeek",
+          "providerKey": "deepseek",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 0.435,
+          "outputUsdPerM": 0.87,
+          "cacheHitUsdPerM": 0.003625,
+          "description": "Maliyet-etkin uzun baglamli uretim kodu, planlama ve teknik cikti modeli."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "file-reader",
         "firmware-planner"
@@ -325,13 +562,58 @@
       "maxSteps": 160,
       "multiModal": true,
       "preferredModels": [
-        "deepseek-v4-pro",
-        "gemini-2.5-pro",
-        "chatgpt-5.5",
         "claude-opus-4-7",
-        "claude-opus-4.7"
+        "gpt-5.4",
+        "grok-4.3"
       ],
-      "minimumModel": "deepseek-chat",
+      "minimumModel": "deepseek-v4-pro",
+      "modelProfile": [
+        {
+          "id": "claude-opus-4-7",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "S",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 5,
+          "outputUsdPerM": 25,
+          "cacheHitUsdPerM": 0.5,
+          "description": "Safety-critical kod, PLC, terminal ve multi-file refactor icin frontier model."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "grok-4.3",
+          "provider": "xAI",
+          "providerKey": "grok",
+          "tier": "S",
+          "context": "256K",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": null,
+          "description": "Ucuz output ve guclu reasoning dengesi; sosyal ve genis planlama icin sweet spot."
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "provider": "DeepSeek",
+          "providerKey": "deepseek",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 0.435,
+          "outputUsdPerM": 0.87,
+          "cacheHitUsdPerM": 0.003625,
+          "description": "Maliyet-etkin uzun baglamli uretim kodu, planlama ve teknik cikti modeli."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search",
         "file-reader",
@@ -411,11 +693,58 @@
       "maxSteps": 40,
       "multiModal": false,
       "preferredModels": [
-        "claude-sonnet-4",
+        "claude-sonnet-4-6",
         "gemini-2.5-pro",
-        "gpt-4o"
+        "gpt-5.4-mini"
       ],
-      "minimumModel": "gpt-4o-mini",
+      "minimumModel": "claude-haiku-4-5",
+      "modelProfile": [
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "gpt-5.4-mini",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "B",
+          "context": null,
+          "inputUsdPerM": 0.75,
+          "outputUsdPerM": 4.5,
+          "cacheHitUsdPerM": null,
+          "description": "UI, quiz, yaratıcı ve hacimli ama dusuk riskli isler icin OpenAI mini."
+        },
+        {
+          "id": "claude-haiku-4-5",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "B",
+          "context": "200K",
+          "inputUsdPerM": 1,
+          "outputUsdPerM": 5,
+          "cacheHitUsdPerM": 0.1,
+          "description": "Anthropic ucuz modeli; tool calling, kisa cevap ve guvenli fallback."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search"
       ],
@@ -457,11 +786,58 @@
       "maxSteps": 30,
       "multiModal": true,
       "preferredModels": [
-        "chatgpt-5.5",
-        "gemini-2.5-pro",
-        "claude-sonnet-4"
+        "gpt-5.4-mini",
+        "gemini-2.5-flash",
+        "claude-haiku-4-5"
       ],
-      "minimumModel": "gpt-4o-mini",
+      "minimumModel": "gpt-5-nano",
+      "modelProfile": [
+        {
+          "id": "gpt-5.4-mini",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "B",
+          "context": null,
+          "inputUsdPerM": 0.75,
+          "outputUsdPerM": 4.5,
+          "cacheHitUsdPerM": null,
+          "description": "UI, quiz, yaratıcı ve hacimli ama dusuk riskli isler icin OpenAI mini."
+        },
+        {
+          "id": "gemini-2.5-flash",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "B",
+          "context": "1M",
+          "inputUsdPerM": 0.3,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": 0.03,
+          "description": "1M context ile ucuz arastirma, belge okuma ve hacimli ozet isleri."
+        },
+        {
+          "id": "claude-haiku-4-5",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "B",
+          "context": "200K",
+          "inputUsdPerM": 1,
+          "outputUsdPerM": 5,
+          "cacheHitUsdPerM": 0.1,
+          "description": "Anthropic ucuz modeli; tool calling, kisa cevap ve guvenli fallback."
+        },
+        {
+          "id": "gpt-5-nano",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "C",
+          "context": "400K",
+          "inputUsdPerM": 0.05,
+          "outputUsdPerM": 0.4,
+          "cacheHitUsdPerM": null,
+          "description": "Cok ucuz siniflandirma, tek satir karar ve basit ozet fallback modeli."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "file-reader",
         "rubric-builder"
@@ -517,10 +893,57 @@
       "multiModal": false,
       "preferredModels": [
         "gemini-2.5-pro",
-        "gpt-4o",
-        "claude-sonnet-4"
+        "claude-sonnet-4-6",
+        "gpt-5.4"
       ],
-      "minimumModel": "gpt-4o-mini",
+      "minimumModel": "gemini-2.5-flash",
+      "modelProfile": [
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "gemini-2.5-flash",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "B",
+          "context": "1M",
+          "inputUsdPerM": 0.3,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": 0.03,
+          "description": "1M context ile ucuz arastirma, belge okuma ve hacimli ozet isleri."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search",
         "file-reader",
@@ -567,11 +990,58 @@
       "maxSteps": 80,
       "multiModal": true,
       "preferredModels": [
-        "chatgpt-5.5",
-        "gemini-2.5-pro",
-        "claude-sonnet-4"
+        "grok-4.3",
+        "gpt-5.4",
+        "claude-sonnet-4-6"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "grok-4.1-fast",
+      "modelProfile": [
+        {
+          "id": "grok-4.3",
+          "provider": "xAI",
+          "providerKey": "grok",
+          "tier": "S",
+          "context": "256K",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": null,
+          "description": "Ucuz output ve guclu reasoning dengesi; sosyal ve genis planlama icin sweet spot."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "grok-4.1-fast",
+          "provider": "xAI",
+          "providerKey": "grok",
+          "tier": "B",
+          "context": "2M",
+          "inputUsdPerM": 0.2,
+          "outputUsdPerM": 0.5,
+          "cacheHitUsdPerM": null,
+          "description": "Devasa context ve sosyal/dinamik icerik icin ucuz xAI fallback."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "content-calendar",
         "social-connector"
@@ -628,11 +1098,58 @@
       "maxSteps": 15,
       "multiModal": true,
       "preferredModels": [
-        "gpt-4o",
-        "gemini-2.5-pro",
-        "claude-sonnet-4"
+        "gpt-5.4",
+        "claude-sonnet-4-6",
+        "gemini-2.5-pro"
       ],
-      "minimumModel": "gpt-4o-mini",
+      "minimumModel": "gpt-5.4-mini",
+      "modelProfile": [
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "gpt-5.4-mini",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "B",
+          "context": null,
+          "inputUsdPerM": 0.75,
+          "outputUsdPerM": 4.5,
+          "cacheHitUsdPerM": null,
+          "description": "UI, quiz, yaratıcı ve hacimli ama dusuk riskli isler icin OpenAI mini."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search"
       ],
@@ -675,11 +1192,58 @@
       "maxSteps": 60,
       "multiModal": true,
       "preferredModels": [
-        "chatgpt-5.5",
-        "claude-sonnet-4",
+        "claude-sonnet-4-6",
+        "gpt-5.4",
         "gemini-2.5-pro"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "deepseek-v4-pro",
+      "modelProfile": [
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "deepseek-v4-pro",
+          "provider": "DeepSeek",
+          "providerKey": "deepseek",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 0.435,
+          "outputUsdPerM": 0.87,
+          "cacheHitUsdPerM": 0.003625,
+          "description": "Maliyet-etkin uzun baglamli uretim kodu, planlama ve teknik cikti modeli."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "plan-board"
       ],
@@ -732,11 +1296,58 @@
       "maxSteps": 80,
       "multiModal": false,
       "preferredModels": [
-        "chatgpt-5.5",
-        "claude-opus-4.7",
-        "deepseek-v4-pro"
+        "claude-opus-4-7",
+        "gpt-5.4",
+        "grok-4.3"
       ],
-      "minimumModel": "gpt-4o",
+      "minimumModel": "claude-sonnet-4-6",
+      "modelProfile": [
+        {
+          "id": "claude-opus-4-7",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "S",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 5,
+          "outputUsdPerM": 25,
+          "cacheHitUsdPerM": 0.5,
+          "description": "Safety-critical kod, PLC, terminal ve multi-file refactor icin frontier model."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "grok-4.3",
+          "provider": "xAI",
+          "providerKey": "grok",
+          "tier": "S",
+          "context": "256K",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": null,
+          "description": "Ucuz output ve guclu reasoning dengesi; sosyal ve genis planlama icin sweet spot."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "terminal-plan"
       ],
@@ -790,11 +1401,58 @@
       "maxSteps": 20,
       "multiModal": true,
       "preferredModels": [
-        "gpt-4o",
-        "claude-sonnet-4",
+        "claude-sonnet-4-6",
+        "gpt-5.4",
         "gemini-2.5-pro"
       ],
-      "minimumModel": "gpt-4o-mini",
+      "minimumModel": "gpt-5.4-mini",
+      "modelProfile": [
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "gpt-5.4-mini",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "B",
+          "context": null,
+          "inputUsdPerM": 0.75,
+          "outputUsdPerM": 4.5,
+          "cacheHitUsdPerM": null,
+          "description": "UI, quiz, yaratıcı ve hacimli ama dusuk riskli isler icin OpenAI mini."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search",
         "file-reader",
@@ -843,11 +1501,58 @@
       "maxSteps": 30,
       "multiModal": true,
       "preferredModels": [
-        "gpt-4o",
-        "gemini-2.5-pro",
-        "claude-sonnet-4"
+        "gpt-5.4",
+        "claude-sonnet-4-6",
+        "gemini-2.5-pro"
       ],
-      "minimumModel": "gpt-4o-mini",
+      "minimumModel": "deepseek-v4-flash",
+      "modelProfile": [
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "provider": "DeepSeek",
+          "providerKey": "deepseek",
+          "tier": "B",
+          "context": "1M",
+          "inputUsdPerM": 0.14,
+          "outputUsdPerM": 0.28,
+          "cacheHitUsdPerM": 0.0028,
+          "description": "En ucuz genel agent modeli; tool calling, format donusumu ve kisa cevaplar icin."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
       "tools": [
         "web-search",
         "file-reader",

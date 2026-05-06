@@ -13,6 +13,8 @@ const { glob } = require('glob');
 
 const repoRoot = path.resolve(__dirname, '..');
 const schema = JSON.parse(fs.readFileSync(path.join(repoRoot, 'agent-schema.json'), 'utf8'));
+const modelRegistry = JSON.parse(fs.readFileSync(path.join(repoRoot, 'model-registry.json'), 'utf8'));
+const registeredModels = new Set(Object.keys(modelRegistry.models || {}));
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
 const validate = ajv.compile(schema);
@@ -40,6 +42,17 @@ function validateAgentDir(agentDir) {
   if (!valid) {
     for (const err of validate.errors || []) {
       errors.push(`${err.instancePath || '/'}: ${err.message}`);
+    }
+  }
+
+  const models = manifest?.spec?.models || {};
+  const declaredModels = [
+    ...(Array.isArray(models.preferred) ? models.preferred : []),
+    models.minimum
+  ].filter(Boolean);
+  for (const model of declaredModels) {
+    if (!registeredModels.has(model)) {
+      errors.push(`Unknown model "${model}". Add it to model-registry.json.`);
     }
   }
 

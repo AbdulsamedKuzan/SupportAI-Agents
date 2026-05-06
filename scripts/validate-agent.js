@@ -21,6 +21,7 @@ if (!agentDir) {
 }
 
 const schemaPath = path.resolve(__dirname, '..', 'agent-schema.json');
+const modelRegistryPath = path.resolve(__dirname, '..', 'model-registry.json');
 const manifestPath = path.resolve(agentDir, 'agent.yaml');
 const systemPromptPath = path.resolve(agentDir, 'system.md');
 
@@ -37,6 +38,8 @@ if (!fs.existsSync(systemPromptPath)) {
 
 // Load schema
 const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+const modelRegistry = JSON.parse(fs.readFileSync(modelRegistryPath, 'utf8'));
+const registeredModels = new Set(Object.keys(modelRegistry.models || {}));
 
 // Load and parse YAML manifest
 let manifest;
@@ -58,6 +61,17 @@ if (!valid) {
   validate.errors.forEach((err) => {
     console.error(`   ${err.instancePath || '/'}: ${err.message}`);
   });
+  process.exit(1);
+}
+
+const declaredModels = [
+  ...(Array.isArray(manifest?.spec?.models?.preferred) ? manifest.spec.models.preferred : []),
+  manifest?.spec?.models?.minimum
+].filter(Boolean);
+const unknownModels = declaredModels.filter((model) => !registeredModels.has(model));
+if (unknownModels.length) {
+  console.error(`❌ Unknown model(s) in ${manifest?.metadata?.id || agentDir}: ${unknownModels.join(', ')}`);
+  console.error('   Add them to model-registry.json before using them in an agent manifest.');
   process.exit(1);
 }
 

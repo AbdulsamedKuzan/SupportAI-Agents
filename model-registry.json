@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "supportai.model-registry.v1",
+  "updatedAt": "2026-05-06",
+  "selectionPolicy": "matrix-first",
+  "models": {
+    "deepseek-v4-flash": {
+      "provider": "DeepSeek",
+      "providerKey": "deepseek",
+      "tier": "B",
+      "context": "1M",
+      "inputUsdPerM": 0.14,
+      "outputUsdPerM": 0.28,
+      "cacheHitUsdPerM": 0.0028,
+      "description": "En ucuz genel agent modeli; tool calling, format donusumu ve kisa cevaplar icin."
+    },
+    "gpt-5-nano": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "C",
+      "context": "400K",
+      "inputUsdPerM": 0.05,
+      "outputUsdPerM": 0.4,
+      "cacheHitUsdPerM": null,
+      "description": "Cok ucuz siniflandirma, tek satir karar ve basit ozet fallback modeli."
+    },
+    "gemini-2.5-flash-lite": {
+      "provider": "Google",
+      "providerKey": "gemini",
+      "tier": "C",
+      "context": null,
+      "inputUsdPerM": 0.1,
+      "outputUsdPerM": 0.4,
+      "cacheHitUsdPerM": 0.01,
+      "description": "Google ucuz tier; basit ozet ve hafif arastirma icin."
+    },
+    "grok-4.1-fast": {
+      "provider": "xAI",
+      "providerKey": "grok",
+      "tier": "B",
+      "context": "2M",
+      "inputUsdPerM": 0.2,
+      "outputUsdPerM": 0.5,
+      "cacheHitUsdPerM": null,
+      "description": "Devasa context ve sosyal/dinamik icerik icin ucuz xAI fallback."
+    },
+    "deepseek-v4-pro": {
+      "provider": "DeepSeek",
+      "providerKey": "deepseek",
+      "tier": "A",
+      "context": "1M",
+      "inputUsdPerM": 0.435,
+      "outputUsdPerM": 0.87,
+      "cacheHitUsdPerM": 0.003625,
+      "description": "Maliyet-etkin uzun baglamli uretim kodu, planlama ve teknik cikti modeli."
+    },
+    "gpt-5.4-nano": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "C",
+      "context": null,
+      "inputUsdPerM": 0.2,
+      "outputUsdPerM": 1.25,
+      "cacheHitUsdPerM": null,
+      "description": "OpenAI nano nesli; hafif karar ve ozet isleri icin."
+    },
+    "gpt-5-mini": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "B",
+      "context": "400K",
+      "inputUsdPerM": 0.25,
+      "outputUsdPerM": 2,
+      "cacheHitUsdPerM": null,
+      "description": "Ucuz ama yetenekli OpenAI mini; kisa kod ve rutin agent adimlari."
+    },
+    "gemini-2.5-flash": {
+      "provider": "Google",
+      "providerKey": "gemini",
+      "tier": "B",
+      "context": "1M",
+      "inputUsdPerM": 0.3,
+      "outputUsdPerM": 2.5,
+      "cacheHitUsdPerM": 0.03,
+      "description": "1M context ile ucuz arastirma, belge okuma ve hacimli ozet isleri."
+    },
+    "grok-4.3": {
+      "provider": "xAI",
+      "providerKey": "grok",
+      "tier": "S",
+      "context": "256K",
+      "inputUsdPerM": 1.25,
+      "outputUsdPerM": 2.5,
+      "cacheHitUsdPerM": null,
+      "description": "Ucuz output ve guclu reasoning dengesi; sosyal ve genis planlama icin sweet spot."
+    },
+    "gpt-5.4-mini": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "B",
+      "context": null,
+      "inputUsdPerM": 0.75,
+      "outputUsdPerM": 4.5,
+      "cacheHitUsdPerM": null,
+      "description": "UI, quiz, yaratıcı ve hacimli ama dusuk riskli isler icin OpenAI mini."
+    },
+    "claude-haiku-4-5": {
+      "provider": "Claude",
+      "providerKey": "claude",
+      "tier": "B",
+      "context": "200K",
+      "inputUsdPerM": 1,
+      "outputUsdPerM": 5,
+      "cacheHitUsdPerM": 0.1,
+      "description": "Anthropic ucuz modeli; tool calling, kisa cevap ve guvenli fallback."
+    },
+    "gpt-5": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "A",
+      "context": "400K",
+      "inputUsdPerM": 1.25,
+      "outputUsdPerM": 10,
+      "cacheHitUsdPerM": 0.125,
+      "description": "Genel amacli OpenAI workhorse; planlama, kod ve teknik cevaplar."
+    },
+    "gemini-2.5-pro": {
+      "provider": "Google",
+      "providerKey": "gemini",
+      "tier": "A",
+      "context": "1M",
+      "inputUsdPerM": 1.25,
+      "outputUsdPerM": 10,
+      "cacheHitUsdPerM": 0.125,
+      "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+    },
+    "claude-sonnet-4-6": {
+      "provider": "Claude",
+      "providerKey": "claude",
+      "tier": "A",
+      "context": "200K (1M tier)",
+      "inputUsdPerM": 3,
+      "outputUsdPerM": 15,
+      "cacheHitUsdPerM": 0.3,
+      "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+    },
+    "gpt-5.4": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "S",
+      "context": null,
+      "inputUsdPerM": 2.5,
+      "outputUsdPerM": 15,
+      "cacheHitUsdPerM": null,
+      "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+    },
+    "grok-4": {
+      "provider": "xAI",
+      "providerKey": "grok",
+      "tier": "S",
+      "context": "256K",
+      "inputUsdPerM": 3,
+      "outputUsdPerM": 15,
+      "cacheHitUsdPerM": null,
+      "description": "Eski Grok frontier modeli; legacy destek ve guclu reasoning."
+    },
+    "claude-opus-4-7": {
+      "provider": "Claude",
+      "providerKey": "claude",
+      "tier": "S",
+      "context": "200K (1M tier)",
+      "inputUsdPerM": 5,
+      "outputUsdPerM": 25,
+      "cacheHitUsdPerM": 0.5,
+      "description": "Safety-critical kod, PLC, terminal ve multi-file refactor icin frontier model."
+    },
+    "gpt-5-pro": {
+      "provider": "OpenAI",
+      "providerKey": "chatgpt",
+      "tier": "S",
+      "context": null,
+      "inputUsdPerM": 15,
+      "outputUsdPerM": 120,
+      "cacheHitUsdPerM": null,
+      "description": "Asiri pahali pro model; v1 agent matrisi icinde varsayilan kullanilmaz."
+    }
+  }
+}

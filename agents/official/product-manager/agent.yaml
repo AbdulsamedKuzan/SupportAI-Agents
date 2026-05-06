@@ -32,12 +32,14 @@ spec:
     streaming: true
 
   models:
-    preferred: [claude-sonnet-4, gemini-2.5-pro, gpt-4o]
-    minimum: gpt-4o-mini
+    preferred:
+      - claude-sonnet-4-6
+      - gemini-2.5-pro
+      - gpt-5.4-mini
+    minimum: claude-haiku-4-5
     fallback: auto
     temperature: 0.3
     maxOutputTokens: 16000
-
   tools:
     - $ref: tools/web-search
 

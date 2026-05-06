@@ -31,8 +31,11 @@ spec:
     streaming: true
     multiModal: true
   models:
-    preferred: [gemini-2.5-pro, chatgpt-5.5, claude-sonnet-4]
-    minimum: gpt-4o
+    preferred:
+      - gemini-2.5-pro
+      - gpt-5.4
+      - grok-4.3
+    minimum: gemini-2.5-flash
     fallback: auto
     temperature: 0.15
     maxOutputTokens: 32000

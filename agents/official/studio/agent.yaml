@@ -33,12 +33,14 @@ spec:
     multiModal: true
 
   models:
-    preferred: [gpt-4o, gemini-2.5-pro, claude-sonnet-4]
-    minimum: gpt-4o-mini
+    preferred:
+      - gpt-5.4
+      - claude-sonnet-4-6
+      - gemini-2.5-pro
+    minimum: gpt-5.4-mini
     fallback: auto
     temperature: 0.7
     maxOutputTokens: 8000
-
   tools:
     - $ref: tools/web-search
 

@@ -10,6 +10,8 @@ const yaml = require('js-yaml');
 const { glob } = require('glob');
 
 const repoRoot = path.resolve(__dirname, '..');
+const modelRegistry = JSON.parse(fs.readFileSync(path.join(repoRoot, 'model-registry.json'), 'utf8'));
+const registeredModels = modelRegistry.models || {};
 
 function toolNames(tools = []) {
   return tools.map((tool) => {
@@ -23,6 +25,27 @@ function cleanText(value, fallback = '') {
   if (!text) return fallback;
   if (/[^\x00-\x7F]/.test(text)) return fallback || text;
   return text;
+}
+
+function modelProfile(models = [], minimum = '') {
+  const ordered = Array.from(new Set([...models, minimum].filter(Boolean)));
+  return ordered.map((id) => {
+    const profile = registeredModels[id];
+    if (!profile) {
+      throw new Error(`Unknown model "${id}". Add it to model-registry.json before using it in an agent manifest.`);
+    }
+    return {
+      id,
+      provider: profile.provider,
+      providerKey: profile.providerKey,
+      tier: profile.tier,
+      context: profile.context,
+      inputUsdPerM: profile.inputUsdPerM,
+      outputUsdPerM: profile.outputUsdPerM,
+      cacheHitUsdPerM: profile.cacheHitUsdPerM,
+      description: profile.description
+    };
+  });
 }
 
 async function main() {
@@ -49,6 +72,9 @@ async function main() {
       `${manifest.metadata.nameEN || displayName} official SupportAI agent.`
     );
 
+    const preferredModels = manifest.spec.models.preferred || [];
+    const minimumModel = manifest.spec.models.minimum || '';
+
     agents.push({
       id: manifest.metadata.id,
       name: displayName,
@@ -65,8 +91,10 @@ async function main() {
       reasoning: manifest.spec.capabilities.reasoning,
       maxSteps: manifest.spec.capabilities.maxSteps,
       multiModal: Boolean(manifest.spec.capabilities.multiModal),
-      preferredModels: manifest.spec.models.preferred || [],
-      minimumModel: manifest.spec.models.minimum || '',
+      preferredModels,
+      minimumModel,
+      modelProfile: modelProfile(preferredModels, minimumModel),
+      modelSelectionPolicy: modelRegistry.selectionPolicy || 'matrix-first',
       tools: toolNames(manifest.spec.tools || []),
       permissions: manifest.spec.permissions || {},
       budgetPolicy: manifest.spec.lifecycle?.budgetPolicy || 'quota-bound',
@@ -89,6 +117,8 @@ async function main() {
     schemaVersion: 'supportai.catalog.v1',
     generatedAt: new Date().toISOString(),
     source: 'supportai-agents',
+    modelRegistryVersion: modelRegistry.schemaVersion,
+    modelSelectionPolicy: modelRegistry.selectionPolicy || 'matrix-first',
     agentCount: agents.length,
     agents
   };
