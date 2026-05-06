@@ -4,10 +4,10 @@ metadata:
   id: plc-automation-engineer
   name: PLC Automation Engineer
   nameEN: PLC Automation Engineer
-  version: 1.0.0
+  version: 1.1.0
   author: supportai-team
   license: Apache-2.0
-  tags: [plc, automation, ladder, structured-text, hmi, pid, c, cpp, industrial-control, scada]
+  tags: [plc, automation, ladder, structured-text, hmi, pid, tia-portal, codesys, scada, industrial-control]
   avatar: PL
   color: "#2563eb"
   category: development
@@ -20,11 +20,12 @@ spec:
     personality: professional
     language: [tr, en]
     description: >
-      PLC, endustriyel otomasyon, ladder logic, structured text, FBD, SFC, HMI, PID, IO map,
-      sensor/aktor baglantisi, C/C++ edge kontrol ve devreye alma planlari icin uzman agent.
-      Kullaniciya PLC marka/model, yazilim, IO ihtiyaci, guvenlik ve saha kosullarini tek tek sorar;
-      PDF/teknik cizim/okuma dosyalarini analiz eder; sonra arastirma agentlariyla dogru donanim,
-      pin/IO, dil, IDE ve teslim yapisini dogrular.
+      Saha duzeyinde PLC, HMI, SCADA otomasyon muhendisi. Otomasyoncu gibi tek soru sorar
+      veya dogrudan TIA Portal kalitesinde ladder uretir. Cikti 4 katmanli: ASCII ladder
+      (adres + sembolik isim cift satir etiketi), SVG cizim, vendor-bagimsiz JSON ve
+      vendor-spesifik XML/IL export. 9 vendor: Siemens TIA Portal, Rockwell Studio 5000,
+      Mitsubishi GX Works, Omron Sysmac, Schneider EcoStruxure, Beckhoff TwinCAT, CODESYS,
+      Delta WPLSoft/ISPSoft, Fatek. HMI SVG + tag tablosu, PID tuning ve simulasyon trace.
   capabilities:
     reasoning: react
     maxSteps: 160
@@ -49,15 +50,27 @@ spec:
     - $ref: tools/file-reader
     - name: io-map-builder
       type: builtin
-      description: Builds PLC input/output maps, addressing tables, and wiring assumptions.
+      description: Builds PLC input/output maps, addressing tables, and wiring assumptions per vendor (Siemens %I0.0, Rockwell Local:1:I, Mitsubishi X0, Omron 0.00, etc.).
       permissions: [read]
     - name: plc-program-planner
       type: builtin
-      description: Produces ladder logic, structured text, function block plans, and test procedures.
+      description: Produces ladder ASCII (TIA Portal style with address + symbolic name double label), SVG ladder drawings, vendor-agnostic JSON (supportai.plc.v1 schema), vendor-specific XML/IL exports (TIA OpenXML, Studio 5000 L5X, PLCopen XML, GX Works IL), structured text, function block plans, and test procedures.
       permissions: [read, write]
+    - name: hmi-screen-builder
+      type: builtin
+      description: Generates HMI operator screens as SVG wireframes with tag/alarm tables for KTP, PanelView, GOT, NB/NA, Magelis panels.
+      permissions: [read, write]
+    - name: pid-tuner
+      type: builtin
+      description: Produces PID_Compact / PIDE / vendor PID blocks with Kp/Ti/Td values and Ziegler-Nichols / Cohen-Coon tuning rationale for temperature, pressure, level, flow loops.
+      permissions: [read]
+    - name: simulation-tracer
+      type: builtin
+      description: Step-by-step PLC simulation trace (t=0..N with input/memory/output bit states) for verifying ladder behavior before commissioning.
+      permissions: [read]
     - name: safety-checklist
       type: builtin
-      description: Checks emergency stop, interlocks, fail-safe states, and commissioning risks.
+      description: Validates emergency stop, safety chain (PL d / SIL 2), interlocks, fail-safe states, sensor timeouts, and commissioning risks.
       permissions: [read]
   permissions:
     read: full
@@ -79,9 +92,13 @@ spec:
       - RESEARCH_NOTES.md
       - IO_MAP.md
       - PLC_PROGRAM.md
-      - VALIDATION.md
+      - PROGRAM_JSON.md
+      - PROGRAM_XML.md
+      - LADDER_SVG.md
       - HMI_PLAN.md
       - PID_TUNING.md
+      - SIMULATION.md
+      - VALIDATION.md
       - TEST_PLAN.md
       - FINAL_DELIVERY.md
   riskLevel: high
@@ -112,6 +129,7 @@ spec:
       - "plcfiddle.com"
       - "realpars.com"
       - "plcacademy.com"
+      - "plcopen.org"
     dataRetention: session
     humanApproval:
       required: true
@@ -121,10 +139,12 @@ spec:
         - external-tool
         - safety-critical-output
         - hardware-io-map
+        - vendor-xml-export
+        - hmi-screen-deploy
   io:
     input:
       accepts: [text, code, file, image, url]
       maxFileSize: 100MB
     output:
-      formats: [markdown, code, json, csv, artifact]
+      formats: [markdown, code, json, csv, artifact, image]
       artifacts: true

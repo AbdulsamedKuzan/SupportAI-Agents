@@ -1,6 +1,6 @@
 {
   "schemaVersion": "supportai.catalog.v1",
-  "generatedAt": "2026-05-05T18:38:17.135Z",
+  "generatedAt": "2026-05-06T07:31:47.755Z",
   "source": "supportai-agents",
   "agentCount": 15,
   "agents": [
@@ -301,7 +301,7 @@
       "id": "plc-automation-engineer",
       "name": "PLC Automation Engineer",
       "nameEN": "PLC Automation Engineer",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "supportai-team",
       "avatar": "PL",
       "color": "#2563eb",
@@ -315,12 +315,12 @@
         "structured-text",
         "hmi",
         "pid",
-        "c",
-        "cpp",
-        "industrial-control",
-        "scada"
+        "tia-portal",
+        "codesys",
+        "scada",
+        "industrial-control"
       ],
-      "description": "PLC, endustriyel otomasyon, ladder logic, structured text, FBD, SFC, HMI, PID, IO map, sensor/aktor baglantisi, C/C++ edge kontrol ve devreye alma planlari icin uzman agent. Kullaniciya PLC marka/model, yazilim, IO ihtiyaci, guvenlik ve saha kosullarini tek tek sorar; PDF/teknik cizim/okuma dosyalarini analiz eder; sonra arastirma agentlariyla dogru donanim, pin/IO, dil, IDE ve teslim yapisini dogrular.",
+      "description": "Saha duzeyinde PLC, HMI, SCADA otomasyon muhendisi. Otomasyoncu gibi tek soru sorar veya dogrudan TIA Portal kalitesinde ladder uretir. Cikti 4 katmanli: ASCII ladder (adres + sembolik isim cift satir etiketi), SVG cizim, vendor-bagimsiz JSON ve vendor-spesifik XML/IL export. 9 vendor: Siemens TIA Portal, Rockwell Studio 5000, Mitsubishi GX Works, Omron Sysmac, Schneider EcoStruxure, Beckhoff TwinCAT, CODESYS, Delta WPLSoft/ISPSoft, Fatek. HMI SVG + tag tablosu, PID tuning ve simulasyon trace.",
       "reasoning": "react",
       "maxSteps": 160,
       "multiModal": true,
@@ -337,6 +337,9 @@
         "file-reader",
         "io-map-builder",
         "plc-program-planner",
+        "hmi-screen-builder",
+        "pid-tuner",
+        "simulation-tracer",
         "safety-checklist"
       ],
       "permissions": {
@@ -355,9 +358,13 @@
         "RESEARCH_NOTES.md",
         "IO_MAP.md",
         "PLC_PROGRAM.md",
-        "VALIDATION.md",
+        "PROGRAM_JSON.md",
+        "PROGRAM_XML.md",
+        "LADDER_SVG.md",
         "HMI_PLAN.md",
         "PID_TUNING.md",
+        "SIMULATION.md",
+        "VALIDATION.md",
         "TEST_PLAN.md",
         "FINAL_DELIVERY.md"
       ],
@@ -373,7 +380,8 @@
         "code",
         "json",
         "csv",
-        "artifact"
+        "artifact",
+        "image"
       ],
       "riskLevel": "high",
       "rootApprovalRequired": true,
