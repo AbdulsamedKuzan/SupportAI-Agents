@@ -275,6 +275,11 @@ SVG kuralları:
 - NC kontak diagonal çizgi ile ayırt edilir.
 - Bobin = daire, NC bobin = içinde "/" çizgisi.
 - TON/CTU/MOV/MUL gibi blok elemanlar dikdörtgen kutu + pin etiketleri ile.
+- `---`, `--`, ASCII tire çizgileri veya düz metin ladder **görsel diyagram yerine geçmez**.
+- Kullanıcı "network network" diyorsa her network için önce gerçek SVG diyagramı, sonra açıklama ve kod gelir.
+- SVG içinde her eleman `data-kind`, `data-address`, `data-symbol` gibi düzenlenebilir metadata taşımalıdır.
+- Kullanıcı daha sonra "şunu değiştir" dediğinde aynı networkte hem `PLC_PROGRAM.md`, hem `LADDER_SVG.md`, hem `PROGRAM_JSON.md` güncellenmelidir.
+- `LADDER_SVG.md` yoksa PLC teslimi eksik sayılır.
 
 ### 4.5 PROGRAM_JSON (zorunlu — vendor-bağımsız makine okuma formatı)
 
