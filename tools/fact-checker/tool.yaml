@@ -1,0 +1,53 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: fact-checker
+  name: Fact Checker
+  version: 1.0.0
+  description: Cross-references claims against fact-checking databases and identifies conflicting information across sources.
+
+spec:
+  description: >
+    Takes a factual claim and searches specialized fact-checking databases
+    (Snopes, FactCheck.org, PolitiFact, Reuters Fact Check, AFP Fact Check)
+    and primary sources to verify accuracy. Returns verification status,
+    supporting/contradicting evidence, and a confidence assessment.
+  parameters:
+    - name: claim
+      type: string
+      required: true
+      description: The factual claim to verify
+    - name: sources
+      type: array
+      required: false
+      description: Optional source URLs that made the claim (for chain-of-evidence tracking)
+    - name: domain
+      type: string
+      required: false
+      description: Topic domain for specialized verification (e.g., science, politics, tech)
+    - name: strictMode
+      type: boolean
+      required: false
+      default: false
+      description: >
+        When true, requires primary source confirmation.
+        When false, accepts secondary source corroboration.
+  returns:
+    type: object
+    description: >
+      {
+        "claim": string,
+        "verdict": "confirmed" | "disputed" | "debunked" | "unverifiable" | "partially-true",
+        "confidence": "HIGH" | "MEDIUM" | "LOW",
+        "evidence": {
+          "supporting": [{ "source": string, "excerpt": string, "credibility": number }],
+          "contradicting": [{ "source": string, "excerpt": string, "credibility": number }]
+        },
+        "factCheckResults": [{ "site": string, "url": string, "rating": string }],
+        "originalSourceFound": boolean,
+        "notes": string
+      }
+  permissions:
+    - network
+  rateLimit:
+    maxCallsPerMinute: 10

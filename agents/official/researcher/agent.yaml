@@ -2,17 +2,18 @@ apiVersion: supportai/v1
 kind: Agent
 metadata:
   id: researcher
-  name: Araştırmacı
-  nameEN: Researcher
-  version: 1.0.0
+  name: Derin Araştırmacı
+  nameEN: Deep Researcher
+  version: 2.0.0
   author: supportai-team
   license: Apache-2.0
-  tags: [research, analysis, synthesis, fact-checking, report]
-  avatar: AR
-  color: "#10b981"
+  tags: [research, deep-search, fact-checking, synthesis, citations, analysis, osint, report]
+  avatar: DR
+  color: "#0d9488"
   category: research
-  maturity: stable
-  minRuntime: browser
+  maturity: official
+  minRuntime: node
+  homepage: https://github.com/supportai/supportai-agents
 
 spec:
   identity:
@@ -20,17 +21,19 @@ spec:
     personality: academic
     language: [tr, en]
     description: >
-      Uzun doküman, ürün araştırması ve karar destek akışları için yapılandırılmış çıktı üretir.
-      Kaynak doğrulama, karşılaştırmalı analiz ve sentez konularında uzmanlaşmıştır.
+      PSVS (Plan-Search-Verify-Synthesize) mimarisi ile calisan derin arastirma ajani.
+      Multi-pass arama, kaynak dogrulama, capraz referans kontrolu, CRAAP testi,
+      multi-perspective soru uretimi ve citation-embedded sentez uretir.
+      OpenAI Deep Research ve Gemini Deep Research seviyesinde cikti hedefler.
 
   capabilities:
     reasoning: react
-    maxSteps: 40
+    maxSteps: 100
     memory:
-      type: sliding-window
-      maxTokens: 48000
+      type: summary
+      maxTokens: 128000
     streaming: true
-    multiModal: false
+    multiModal: true
 
   models:
     preferred:
@@ -39,29 +42,77 @@ spec:
       - gpt-5.4
     minimum: gemini-2.5-flash
     fallback: auto
-    temperature: 0.2
-    maxOutputTokens: 32000
+    temperature: 0.15
+    maxOutputTokens: 64000
+
   tools:
     - $ref: tools/web-search
+    - $ref: tools/web-scraper
     - $ref: tools/file-reader
+    - $ref: tools/api-connector
+    - $ref: tools/query-decomposer
+    - $ref: tools/fact-checker
+    - $ref: tools/content-summarizer
+    - name: source-ranker
+      type: builtin
+      description: >
+        Scores sources using CRAAP test criteria (Currency, Relevance, Authority,
+        Accuracy, Purpose). Returns credibility score (0-100), tier (1-4),
+        and detailed breakdown per criterion. Also detects bias indicators
+        and sponsored content flags.
+      permissions: [read, network]
     - name: citation-formatter
       type: builtin
-      description: Formats citations in APA, MLA, or Chicago style
+      description: >
+        Formats citations in APA, MLA, Chicago, or IEEE style.
+        Accepts raw source metadata and returns properly formatted reference.
+      permissions: []
+    - name: conflict-resolver
+      type: builtin
+      description: >
+        Analyzes conflicting claims from multiple sources. Weighs source
+        credibility, recency, and evidence quality to produce a reasoned
+        assessment of which claim is most likely accurate.
       permissions: []
 
+  permissions:
+    read: full
+    write: none
+    network: full
+    execute: none
+    mcp: limited
+    social: none
+    system: none
+
+  lifecycle:
+    longRunning: true
+    resumable: true
+    budgetPolicy: quota-bound
+    checkpointIntervalSeconds: 120
+    heartbeatSeconds: 30
+    communicationFiles:
+      - RESEARCH_PLAN.md
+      - FINDINGS.md
+      - SOURCES.md
+
+  riskLevel: medium
+  rootApprovalRequired: false
+
   governance:
-    maxExecutionTime: 7200
-    maxApiCalls: 200
+    maxExecutionTime: 14400
+    maxApiCalls: 800
+    maxTokenBudget: 5000000
     sandboxed: true
     allowedDomains: ["*"]
     dataRetention: session
     humanApproval:
       required: false
+      forActions: []
 
   io:
     input:
-      accepts: [text, file, url]
-      maxFileSize: 20MB
+      accepts: [text, file, image, url]
+      maxFileSize: 50MB
     output:
-      formats: [markdown, json, csv]
+      formats: [markdown, json, csv, artifact]
       artifacts: true

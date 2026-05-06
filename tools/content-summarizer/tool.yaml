@@ -1,0 +1,57 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: content-summarizer
+  name: Content Summarizer
+  version: 1.0.0
+  description: Compresses long documents into concise summaries while preserving key facts, citations, and data points.
+
+spec:
+  description: >
+    Takes long-form content (articles, papers, reports) and produces
+    a structured summary optimized for context window management.
+    Preserves quantitative data, key claims, source attributions,
+    and temporal information. Designed for research pipelines where
+    multiple documents must fit within limited context.
+  parameters:
+    - name: content
+      type: string
+      required: true
+      description: The content to summarize
+    - name: maxLength
+      type: integer
+      required: false
+      default: 2000
+      description: Maximum character length of the summary
+    - name: mode
+      type: string
+      required: false
+      enum: [extract, abstract, structured]
+      default: structured
+      description: >
+        'extract' = key sentence extraction.
+        'abstract' = rewritten summary.
+        'structured' = JSON with claims, data points, and metadata.
+    - name: preserveCitations
+      type: boolean
+      required: false
+      default: true
+      description: Keep source URLs and attribution in the summary
+    - name: focusQuery
+      type: string
+      required: false
+      description: Optional query to focus the summary on specific aspects
+  returns:
+    type: object
+    description: >
+      {
+        "summary": string,
+        "keyFacts": [string],
+        "dataPoints": [{ "metric": string, "value": string, "source": string }],
+        "citations": [string],
+        "originalLength": number,
+        "compressionRatio": number
+      }
+  permissions: []
+  rateLimit:
+    maxCallsPerMinute: 20

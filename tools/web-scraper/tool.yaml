@@ -1,0 +1,65 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: web-scraper
+  name: Web Scraper
+  version: 1.0.0
+  description: Extracts clean, LLM-ready content from URLs with JavaScript rendering support.
+
+spec:
+  description: >
+    Fetches a URL and extracts the main content as clean markdown.
+    Handles JavaScript-rendered pages via headless browser when needed.
+    Strips navigation, ads, and boilerplate. Returns structured metadata
+    alongside the content for source evaluation purposes.
+  parameters:
+    - name: url
+      type: string
+      required: true
+      description: Full URL to scrape content from
+    - name: extractMode
+      type: string
+      required: false
+      enum: [auto, article, full, selective]
+      default: auto
+      description: >
+        'auto' = smart extraction of main content.
+        'article' = optimized for news/blog articles.
+        'full' = entire page content.
+        'selective' = extract only matching CSS selectors.
+    - name: selectors
+      type: array
+      required: false
+      description: CSS selectors for selective extraction mode
+    - name: maxLength
+      type: integer
+      required: false
+      default: 15000
+      description: Maximum character length of extracted content
+    - name: includeMetadata
+      type: boolean
+      required: false
+      default: true
+      description: Include page metadata (title, author, date, description)
+  returns:
+    type: object
+    description: >
+      {
+        "url": string,
+        "title": string,
+        "author": string | null,
+        "publishDate": string | null,
+        "content": string (markdown),
+        "wordCount": number,
+        "language": string,
+        "domain": string,
+        "extractionMethod": "static" | "headless",
+        "truncated": boolean
+      }
+  permissions:
+    - network
+  security:
+    requiresDomainAllowlist: true
+    maxResponseSizeMB: 10
+  rateLimit:
+    maxCallsPerMinute: 15

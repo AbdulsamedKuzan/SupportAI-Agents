@@ -1,0 +1,59 @@
+apiVersion: supportai/v1
+kind: Tool
+metadata:
+  id: query-decomposer
+  name: Query Decomposer
+  version: 1.0.0
+  description: Decomposes complex queries into atomic, non-overlapping sub-questions with targeted search strategies.
+
+spec:
+  description: >
+    Analyzes a complex user query and breaks it into atomic sub-questions.
+    Each sub-question includes a search strategy, expected source types,
+    and temporal scope. Enables multi-pass research by providing a
+    structured research plan before execution begins.
+  parameters:
+    - name: query
+      type: string
+      required: true
+      description: The original complex query to decompose
+    - name: maxSubQueries
+      type: integer
+      required: false
+      default: 8
+      description: Maximum number of sub-questions to generate (1-15)
+    - name: perspective
+      type: string
+      required: false
+      enum: [single, multi]
+      default: multi
+      description: >
+        'single' = one viewpoint decomposition.
+        'multi' = STORM-style multi-perspective question generation.
+    - name: language
+      type: string
+      required: false
+      default: auto
+      description: Language for generated sub-queries (auto-detect or ISO 639-1)
+  returns:
+    type: object
+    description: >
+      {
+        "originalQuery": string,
+        "intent": "decision | information | report | comparison | fact-check",
+        "temporalScope": "historical | current | future | mixed",
+        "subQueries": [
+          {
+            "id": number,
+            "question": string,
+            "searchStrategy": string,
+            "expectedSources": ["academic", "official", "news", "technical"],
+            "priority": "critical | high | medium | low",
+            "dependsOn": [number] | null
+          }
+        ],
+        "perspectives": [string] (only when perspective=multi)
+      }
+  permissions: []
+  rateLimit:
+    maxCallsPerMinute: 20

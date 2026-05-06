@@ -1,6 +1,6 @@
 {
   "schemaVersion": "supportai.catalog.v1",
-  "generatedAt": "2026-05-06T08:49:14.581Z",
+  "generatedAt": "2026-05-06T13:38:02.636Z",
   "source": "supportai-agents",
   "modelRegistryVersion": "supportai.model-registry.v1",
   "modelSelectionPolicy": "matrix-first",
@@ -110,6 +110,128 @@
       "rootApprovalRequired": false,
       "outputArtifacts": true,
       "path": "agents/official/code-architect"
+    },
+    {
+      "id": "researcher",
+      "name": "Deep Researcher",
+      "nameEN": "Deep Researcher",
+      "version": "2.0.0",
+      "author": "supportai-team",
+      "avatar": "DR",
+      "color": "#0d9488",
+      "category": "research",
+      "maturity": "official",
+      "bucket": "official",
+      "tags": [
+        "research",
+        "deep-search",
+        "fact-checking",
+        "synthesis",
+        "citations",
+        "analysis",
+        "osint",
+        "report"
+      ],
+      "description": "PSVS (Plan-Search-Verify-Synthesize) mimarisi ile calisan derin arastirma ajani. Multi-pass arama, kaynak dogrulama, capraz referans kontrolu, CRAAP testi, multi-perspective soru uretimi ve citation-embedded sentez uretir. OpenAI Deep Research ve Gemini Deep Research seviyesinde cikti hedefler.",
+      "reasoning": "react",
+      "maxSteps": 100,
+      "multiModal": true,
+      "preferredModels": [
+        "gemini-2.5-pro",
+        "claude-sonnet-4-6",
+        "gpt-5.4"
+      ],
+      "minimumModel": "gemini-2.5-flash",
+      "modelProfile": [
+        {
+          "id": "gemini-2.5-pro",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "A",
+          "context": "1M",
+          "inputUsdPerM": 1.25,
+          "outputUsdPerM": 10,
+          "cacheHitUsdPerM": 0.125,
+          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "provider": "Claude",
+          "providerKey": "claude",
+          "tier": "A",
+          "context": "200K (1M tier)",
+          "inputUsdPerM": 3,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": 0.3,
+          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
+        },
+        {
+          "id": "gpt-5.4",
+          "provider": "OpenAI",
+          "providerKey": "chatgpt",
+          "tier": "S",
+          "context": null,
+          "inputUsdPerM": 2.5,
+          "outputUsdPerM": 15,
+          "cacheHitUsdPerM": null,
+          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
+        },
+        {
+          "id": "gemini-2.5-flash",
+          "provider": "Google",
+          "providerKey": "gemini",
+          "tier": "B",
+          "context": "1M",
+          "inputUsdPerM": 0.3,
+          "outputUsdPerM": 2.5,
+          "cacheHitUsdPerM": 0.03,
+          "description": "1M context ile ucuz arastirma, belge okuma ve hacimli ozet isleri."
+        }
+      ],
+      "modelSelectionPolicy": "matrix-first",
+      "tools": [
+        "web-search",
+        "web-scraper",
+        "file-reader",
+        "api-connector",
+        "query-decomposer",
+        "fact-checker",
+        "content-summarizer",
+        "source-ranker",
+        "citation-formatter",
+        "conflict-resolver"
+      ],
+      "permissions": {
+        "read": "full",
+        "write": "none",
+        "network": "full",
+        "execute": "none",
+        "mcp": "limited",
+        "social": "none",
+        "system": "none"
+      },
+      "budgetPolicy": "quota-bound",
+      "communicationFiles": [
+        "RESEARCH_PLAN.md",
+        "FINDINGS.md",
+        "SOURCES.md"
+      ],
+      "accepts": [
+        "text",
+        "file",
+        "image",
+        "url"
+      ],
+      "outputFormats": [
+        "markdown",
+        "json",
+        "csv",
+        "artifact"
+      ],
+      "riskLevel": "medium",
+      "rootApprovalRequired": false,
+      "outputArtifacts": true,
+      "path": "agents/official/researcher"
     },
     {
       "id": "deep-search",
@@ -868,104 +990,6 @@
       "rootApprovalRequired": false,
       "outputArtifacts": true,
       "path": "agents/official/quiz-builder"
-    },
-    {
-      "id": "researcher",
-      "name": "Researcher",
-      "nameEN": "Researcher",
-      "version": "1.0.0",
-      "author": "supportai-team",
-      "avatar": "AR",
-      "color": "#10b981",
-      "category": "research",
-      "maturity": "stable",
-      "bucket": "official",
-      "tags": [
-        "research",
-        "analysis",
-        "synthesis",
-        "fact-checking",
-        "report"
-      ],
-      "description": "Researcher official SupportAI agent.",
-      "reasoning": "react",
-      "maxSteps": 40,
-      "multiModal": false,
-      "preferredModels": [
-        "gemini-2.5-pro",
-        "claude-sonnet-4-6",
-        "gpt-5.4"
-      ],
-      "minimumModel": "gemini-2.5-flash",
-      "modelProfile": [
-        {
-          "id": "gemini-2.5-pro",
-          "provider": "Google",
-          "providerKey": "gemini",
-          "tier": "A",
-          "context": "1M",
-          "inputUsdPerM": 1.25,
-          "outputUsdPerM": 10,
-          "cacheHitUsdPerM": 0.125,
-          "description": "1M context ve arastirma/belge analizi icin guclu Google modeli."
-        },
-        {
-          "id": "claude-sonnet-4-6",
-          "provider": "Claude",
-          "providerKey": "claude",
-          "tier": "A",
-          "context": "200K (1M tier)",
-          "inputUsdPerM": 3,
-          "outputUsdPerM": 15,
-          "cacheHitUsdPerM": 0.3,
-          "description": "Tool orchestration, UI, planlama ve gunluk uretim kodu icin workhorse."
-        },
-        {
-          "id": "gpt-5.4",
-          "provider": "OpenAI",
-          "providerKey": "chatgpt",
-          "tier": "S",
-          "context": null,
-          "inputUsdPerM": 2.5,
-          "outputUsdPerM": 15,
-          "cacheHitUsdPerM": null,
-          "description": "OpenAI flagship; multi-file kod, mimari ve kritik reasoning isleri."
-        },
-        {
-          "id": "gemini-2.5-flash",
-          "provider": "Google",
-          "providerKey": "gemini",
-          "tier": "B",
-          "context": "1M",
-          "inputUsdPerM": 0.3,
-          "outputUsdPerM": 2.5,
-          "cacheHitUsdPerM": 0.03,
-          "description": "1M context ile ucuz arastirma, belge okuma ve hacimli ozet isleri."
-        }
-      ],
-      "modelSelectionPolicy": "matrix-first",
-      "tools": [
-        "web-search",
-        "file-reader",
-        "citation-formatter"
-      ],
-      "permissions": {},
-      "budgetPolicy": "quota-bound",
-      "communicationFiles": [],
-      "accepts": [
-        "text",
-        "file",
-        "url"
-      ],
-      "outputFormats": [
-        "markdown",
-        "json",
-        "csv"
-      ],
-      "riskLevel": "low",
-      "rootApprovalRequired": false,
-      "outputArtifacts": true,
-      "path": "agents/official/researcher"
     },
     {
       "id": "social-growth-agent",
